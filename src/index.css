@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+    --font-brush: 'Ma Shan Zheng', 'Zhi Mang Xing', 'Kaiti SC', 'STKaiti', cursive, serif;
+  }
+
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+    background-color: #0b0e0d;
+    color: #e6dfd1;
+  }
+}
+
+.font-brush {
+  font-family: 'Ma Shan Zheng', 'Zhi Mang Xing', 'Kaiti SC', 'STKaiti', cursive, serif;
+}
+
+/* Warring States Bronze & Stone Inscription Styling */
+.bronze-bg-main {
+  background: radial-gradient(circle at 50% 30%, #151d1a 0%, #0e1412 60%, #080b0a 100%);
+}
+
+.bronze-panel {
+  background: linear-gradient(180deg, rgba(20, 28, 25, 0.95) 0%, rgba(12, 17, 15, 0.98) 100%);
+  border: 1px solid #3d564c;
+  box-shadow: inset 0 1px 0 rgba(197, 160, 89, 0.2), 0 10px 30px rgba(0, 0, 0, 0.85);
+}
+
+.bronze-card {
+  background: linear-gradient(135deg, rgba(23, 33, 29, 0.92) 0%, rgba(14, 20, 18, 0.96) 100%);
+  border: 1px solid #2e473d;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Hard Bronze Chiseled Border & Corner Clips */
+.bronze-border-ornate {
+  border: 1px solid #4a685c;
+  position: relative;
+}
+
+.bronze-border-ornate::before,
+.bronze-border-ornate::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #c5a059;
+}
+
+.bronze-btn {
+  background: linear-gradient(180deg, #24352f 0%, #131c19 100%);
+  border: 1px solid #4a685c;
+  color: #dfba73;
+  box-shadow: inset 0 1px 0 rgba(223, 186, 115, 0.25), 0 2px 8px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bronze-btn:hover {
+  background: linear-gradient(180deg, #2d423b 0%, #192622 100%);
+  border-color: #c5a059;
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 15px rgba(197, 160, 89, 0.3);
+}
+
+.bronze-btn-gold {
+  background: linear-gradient(180deg, #3a321f 0%, #1c180e 100%);
+  border: 1px solid #c5a059;
+  color: #ffd885;
+  box-shadow: inset 0 1px 0 rgba(255, 216, 133, 0.3), 0 0 20px rgba(197, 160, 89, 0.35);
+}
+
+.bronze-btn-gold:hover {
+  background: linear-gradient(180deg, #4d4329 0%, #262013 100%);
+  border-color: #ffe199;
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 25px rgba(255, 216, 133, 0.55);
+}
+
+/* Verdigris & Cinnabar Highlights */
+.text-verdigris {
+  color: #7bb39d;
+}
+
+.text-bronze-gold {
+  color: #dfba73;
+}
+
+.text-cinnabar {
+  color: #d64d3e;
+}
+
+/* Seal stamps */
+.seal-red {
+  border: 1.5px solid #b83a2d;
+  color: #e65a4b;
+  background-color: rgba(184, 58, 45, 0.15);
+  box-shadow: 0 0 10px rgba(184, 58, 45, 0.25);
+}
+
+.seal-gold {
+  border: 1.5px solid #997a3e;
+  color: #dfba73;
+  background-color: rgba(153, 122, 62, 0.15);
+  box-shadow: 0 0 10px rgba(197, 160, 89, 0.25);
+}
+
+/* Classical Diamond Markers & Line Dividers */
+.bronze-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #3d564c 30%, #c5a059 50%, #3d564c 70%, transparent 100%);
+}
+

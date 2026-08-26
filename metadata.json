@@ -1,0 +1,6 @@
+{
+  "name": "五德融剑 · 刚柔舞韵",
+  "description": "剑由铁铸，心由德成；五德存于心，方知手中之剑为何而出。跟随铸剑师干将踏上问剑之旅，历经仁、礼、义、智、信五德试炼。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
