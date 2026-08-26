@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { sound } from '../audio';
 import { VideoModal } from '../components/VideoModal';
 import { getPlaceholderImage } from '../assets/placeholderGenerator';
+import { WuxiaDialogueBox, DialogueLine } from '../components/WuxiaDialogueBox';
 import { WuxiaEpilogue } from '../components/WuxiaEpilogue';
 import { Flame, Swords, ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
 
@@ -37,11 +38,35 @@ export const Level3View: React.FC<Level3ViewProps> = ({ onCompleteLevel, onBackT
   const [chargeProgress, setChargeProgress] = useState(0);
   const maxCharge = 25;
 
-  const yulangDialogues = [
-    { speaker: '干将', text: '“小姑娘，你是谁？”', color: '#00FF88' },
-    { speaker: '玉琅', text: '“我叫玉琅。”', color: '#00FFFF' },
-    { speaker: '干将', text: '“那些恶徒为何在街市欺负你？”', color: '#00FF88' },
-    { speaker: '玉琅', text: '“我叫玉琅，家族三代雕玉。他们趁我父亲不在，想要抢夺我脖子上的玉珏！”', color: '#00FFFF' },
+  const yulangDialogues: DialogueLine[] = [
+    {
+      speaker: '干将',
+      nameTag: '干将',
+      speakerSide: 'right',
+      avatarType: 'ganjiang',
+      text: '“小姑娘，你是谁？”',
+    },
+    {
+      speaker: '玉琅',
+      nameTag: '玉琅',
+      speakerSide: 'left',
+      avatarType: 'yulang',
+      text: '“我叫玉琅。”',
+    },
+    {
+      speaker: '干将',
+      nameTag: '干将',
+      speakerSide: 'right',
+      avatarType: 'ganjiang',
+      text: '“那些恶徒为何在街市欺负你？”',
+    },
+    {
+      speaker: '玉琅',
+      nameTag: '玉琅',
+      speakerSide: 'left',
+      avatarType: 'yulang',
+      text: '“我叫玉琅，家族三代雕玉。他们趁我父亲不在，想要抢夺我脖子上的玉珏！”',
+    },
   ];
 
   const handleNextDialogue = () => {
@@ -119,7 +144,7 @@ export const Level3View: React.FC<Level3ViewProps> = ({ onCompleteLevel, onBackT
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(32,49,42,0.4)_0%,rgba(10,15,13,0.98)_100%)] pointer-events-none" />
 
       {/* Top Header Tag */}
-      {stage !== 'CONCLUSION' && (
+      {stage !== 'CONCLUSION' && stage !== 'DIALOGUE_YULANG' && (
         <div className="relative z-10 w-full max-w-3xl flex items-center justify-between">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-[#16221e]/95 border border-[#3b554b] text-xs sm:text-sm font-serif text-[#ffd885] shadow-md">
             <span className="w-2 h-2 rounded-full bg-[#d64d3e] shadow-[0_0_8px_#d64d3e] animate-pulse" />
@@ -160,42 +185,19 @@ export const Level3View: React.FC<Level3ViewProps> = ({ onCompleteLevel, onBackT
         </div>
       )}
 
-      {/* STAGE: DIALOGUE WITH YULANG (PDF Page 6-7) */}
+      {/* STAGE: DIALOGUE WITH YULANG (Matching Fig 3: RPG Visual Novel Bust Dialogue UI) */}
       {stage === 'DIALOGUE_YULANG' && (
-        <div className="relative z-10 my-auto w-full max-w-2xl bg-[#16221e]/95 border border-[#3b554b] rounded-sm p-6 sm:p-8 shadow-2xl backdrop-blur-md">
-          <div className="flex items-center gap-2 mb-4 border-b border-[#2b3e36] pb-2">
-            <span className="text-2xl">
-              {yulangDialogues[dialogueStep].speaker === '干将' ? '🥋' : '👧'}
-            </span>
-            <div>
-              <span
-                className="font-serif font-bold text-lg sm:text-xl"
-                style={{ color: yulangDialogues[dialogueStep].color }}
-              >
-                {yulangDialogues[dialogueStep].speaker}
-              </span>
-              <span className="text-xs text-[#a8b8b0] ml-2 font-serif">
-                ({dialogueStep + 1} / {yulangDialogues.length})
-              </span>
-            </div>
-          </div>
-
-          <div className="min-h-[110px] sm:min-h-[130px] flex items-center bg-[#111916] p-4 rounded-sm border border-[#2b3e36] mb-6">
-            <p className="text-base sm:text-lg font-serif text-[#f5efe3] leading-relaxed">
-              {yulangDialogues[dialogueStep].text}
-            </p>
-          </div>
-
-          <div className="text-right">
-            <button
-              id="lvl3-btn-dialogue-next"
-              onClick={handleNextDialogue}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-sm bg-gradient-to-r from-[#1b2b25] via-[#2a4037] to-[#1b2b25] border border-[#dfba73] hover:border-[#fff] text-[#ffd885] hover:text-white font-serif text-sm sm:text-base font-bold transition-all shadow-md cursor-pointer active:scale-95"
-            >
-              <span>{dialogueStep < yulangDialogues.length - 1 ? '点击继续 ▶' : '仗剑拔刀 · 拔剑出招'}</span>
-              <ArrowRight className="w-4 h-4 text-[#ffd885]" />
-            </button>
-          </div>
+        <div className="absolute inset-0 z-20 flex flex-col justify-between">
+          <WuxiaDialogueBox
+            dialogues={yulangDialogues}
+            currentIndex={dialogueStep}
+            onNext={handleNextDialogue}
+            onSkip={() => {
+              sound.playClick();
+              setStage('VIDEO1');
+            }}
+            headerTag="第三关 义 · 烈风之断"
+          />
         </div>
       )}
 

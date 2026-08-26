@@ -204,7 +204,7 @@ export const Level2View: React.FC<Level2ViewProps> = ({ onCompleteLevel, onBackT
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(32,49,42,0.4)_0%,rgba(10,15,13,0.98)_100%)] pointer-events-none" />
 
       {/* Top Header Tag */}
-      {stage !== 'CONCLUSION' && (
+      {stage !== 'CONCLUSION' && stage !== 'DIALOGUE' && (
         <div className="relative z-10 w-full max-w-3xl flex items-center justify-between">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-[#16221e]/95 border border-[#3b554b] text-xs sm:text-sm font-serif text-[#ffd885] shadow-md">
             <span className="w-2 h-2 rounded-full bg-[#d64d3e] shadow-[0_0_8px_#d64d3e] animate-pulse" />
@@ -308,17 +308,20 @@ export const Level2View: React.FC<Level2ViewProps> = ({ onCompleteLevel, onBackT
         </div>
       )}
 
-      {/* STAGE: DIALOGUE (Fig 2 RPG Character + Speech Box Style) */}
+      {/* STAGE: DIALOGUE (Fig 3 RPG Character + Speech Box Style) */}
       {stage === 'DIALOGUE' && (
-        <WuxiaDialogueBox
-          dialogues={dialogues}
-          currentIndex={dialogueIndex}
-          onNext={handleNextDialogue}
-          onSkip={() => {
-            sound.playClick();
-            setStage('RECEIVE_HANDS');
-          }}
-        />
+        <div className="absolute inset-0 z-20 flex flex-col justify-between">
+          <WuxiaDialogueBox
+            dialogues={dialogues}
+            currentIndex={dialogueIndex}
+            onNext={handleNextDialogue}
+            onSkip={() => {
+              sound.playClick();
+              setStage('RECEIVE_HANDS');
+            }}
+            headerTag="第二关 礼 · 剑问圣人"
+          />
+        </div>
       )}
 
       {/* STAGE: RECEIVE HANDS (PDF Page 5) */}

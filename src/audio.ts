@@ -191,43 +191,50 @@ class SoundEngine {
     osc.stop(t + 0.08);
   }
 
-  // Wuxia: Crisp Touchstone / Pointing-Gold Sparring Chime (点金石切磋声 - 清脆温润金石相扣)
-  public playSwordSlash() {
+  // Sparkling Starlight Twinkle sound (星光闪烁之音 - 清澈空灵的星尘辉芒)
+  public playStarTwinkle() {
     if (this.isMuted) return;
     this.initContext();
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
+    // 3-4 delicate high-frequency sparkling harmonics with slight random variations
+    const freqs = [
+      2349.32, // D7
+      2793.83, // F7
+      3520.00, // A7
+      4186.01, // C8
+      5587.65, // F8
+    ];
+    
+    // Pick 3 random sparkly notes from the celestial pentatonic chord
+    const shuffled = [...freqs].sort(() => 0.5 - Math.random()).slice(0, 3);
 
-    // High clear jade/gold chime
-    const osc1 = this.ctx.createOscillator();
-    const gain1 = this.ctx.createGain();
-    osc1.type = 'sine';
-    osc1.frequency.setValueAtTime(2093, t); // C7 pure bell
-    osc1.frequency.exponentialRampToValueAtTime(1046.5, t + 0.18);
+    shuffled.forEach((freq, idx) => {
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const delay = t + idx * 0.045;
 
-    gain1.gain.setValueAtTime(0.3, t);
-    gain1.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, delay);
+      // Subtle upward shimmer frequency drift
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.06, delay + 0.18);
 
-    osc1.connect(gain1);
-    gain1.connect(this.ctx.destination);
-    osc1.start(t);
-    osc1.stop(t + 0.18);
+      gain.gain.setValueAtTime(0.001, delay);
+      gain.gain.linearRampToValueAtTime(0.12 / (idx + 1), delay + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, delay + 0.28);
 
-    // Stone overtone
-    const osc2 = this.ctx.createOscillator();
-    const gain2 = this.ctx.createGain();
-    osc2.type = 'triangle';
-    osc2.frequency.setValueAtTime(3135.96, t); // G7 harmonic
-    osc2.frequency.exponentialRampToValueAtTime(1567.98, t + 0.12);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(delay);
+      osc.stop(delay + 0.28);
+    });
+  }
 
-    gain2.gain.setValueAtTime(0.2, t);
-    gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
-
-    osc2.connect(gain2);
-    gain2.connect(this.ctx.destination);
-    osc2.start(t);
-    osc2.stop(t + 0.12);
+  // Wuxia: Crisp Touchstone / Pointing-Gold Sparring Chime (点金石切磋声 - 清脆温润金石相扣)
+  public playSwordSlash() {
+    this.playStarTwinkle();
   }
 
   // Wuxia: Sword Unsheathe metallic chime

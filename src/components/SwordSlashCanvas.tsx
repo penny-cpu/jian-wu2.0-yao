@@ -50,12 +50,12 @@ export const SwordSlashCanvas: React.FC = () => {
         const dt = now - last.time;
         const speed = dt > 0 ? dist / dt : 0;
 
-        // Trigger sword slash whoosh on swift mouse slash or drag
-        if (speed > 1.8 && now - lastSoundTime.current > 350) {
+        // Trigger sparkling starlight twinkle chime on mouse movement
+        if (speed > 1.8 && now - lastSoundTime.current > 320) {
           lastSoundTime.current = now;
-          sound.playSwordSlash();
+          sound.playStarTwinkle();
 
-          // Spawn ink & golden sword spark particles on fast slash
+          // Spawn starlight spark particles on mouse glide
           for (let i = 0; i < 4; i++) {
             const angle = Math.random() * Math.PI * 2;
             const spd = Math.random() * 2 + 1;
@@ -66,7 +66,7 @@ export const SwordSlashCanvas: React.FC = () => {
               vy: Math.sin(angle) * spd,
               size: Math.random() * 3 + 1,
               alpha: 0.9,
-              color: Math.random() > 0.4 ? '#d4af37' : '#e6dbca',
+              color: Math.random() > 0.4 ? '#ffd885' : '#eaf8f2',
             });
           }
         }
