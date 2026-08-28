@@ -73,7 +73,7 @@ export const TitleView: React.FC<TitleViewProps> = ({
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-[#22332c] border border-[#527768] hover:border-[#dfba73] text-[#ffd885] hover:text-[#fff] transition-all text-xs sm:text-sm font-serif cursor-pointer shadow-md active:scale-95"
           >
             <Award className="w-4 h-4 text-[#ffd885]" />
-            <span className="font-bold">剑谱·侠客令</span>
+            <span className="font-bold">我的闯关</span>
           </button>
 
           <button
@@ -82,7 +82,7 @@ export const TitleView: React.FC<TitleViewProps> = ({
               sound.playClick();
               onOpenCharacter();
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-[#16221e] border border-[#3b554b] hover:border-[#dfba73] text-[#c7beaf] hover:text-[#ffd885] transition-all text-xs sm:text-sm font-serif cursor-pointer shadow-md active:scale-95"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-[#16221e] border border-[#3b554b] hover:border-[#dfba73] text-[#c7beaf] hover:text-[#ffd885] transition-all text-xs sm:text-sm font-serif cursor-pointer shadow-md active:scale-95"
           >
             <User className="w-4 h-4 text-[#7bb39d]" />
             <span>人物志</span>
@@ -91,37 +91,39 @@ export const TitleView: React.FC<TitleViewProps> = ({
       </div>
 
       {/* Center Title & Warring States Stone Stele Section */}
-      <div className="relative z-10 text-center my-auto -translate-y-2 sm:-translate-y-4 max-w-4xl px-4 py-2 flex flex-col items-center">
-        {/* Subtle Bronze Dynasty Marker */}
-        <div className="text-[11px] sm:text-xs font-serif text-[#7bb39d] tracking-[0.3em] mb-2 uppercase flex items-center gap-2">
-          <span>◇</span>
-          <span>春秋干将 · 金石铭刻</span>
-          <span>◇</span>
-        </div>
-
+      <div className="relative z-10 text-center my-auto -translate-y-1 sm:-translate-y-2 max-w-4xl px-4 py-2 flex flex-col items-center">
         {/* Main Title with Bronze & Inscribed Stone Feel */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-brush text-[#f5efe3] tracking-[0.18em] leading-tight mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,0.98)] whitespace-nowrap">
-          五德融剑 · 刚柔舞韵
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-brush text-[#f5efe3] tracking-[0.2em] leading-tight mb-2 drop-shadow-[0_4px_25px_rgba(0,0,0,0.98)] whitespace-nowrap">
+          五徳剑道
         </h1>
 
-        {/* 3 Unified Description Lines with Bronze Cinnabar Accent */}
+        {/* Subtitle */}
+        <div className="text-sm sm:text-lg md:text-xl font-serif text-[#dfba73] tracking-[0.35em] font-medium mb-5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] flex items-center justify-center gap-2 sm:gap-3">
+          <span className="text-xs text-[#7bb39d]">❖</span>
+          <span>剑舞文化交互游戏</span>
+          <span className="text-xs text-[#7bb39d]">❖</span>
+        </div>
+
+        {/* Martial Motto: 2-line Golden Text */}
         <div className="flex flex-col items-center justify-center space-y-2 text-center max-w-2xl mx-auto">
           <div className="text-xs sm:text-sm font-serif text-[#d64d3e] font-bold tracking-[0.25em] flex items-center gap-2">
             <span>—</span>
             <span>【 武 侠 宏 旨 】</span>
             <span>—</span>
           </div>
-          <p className="text-xs sm:text-sm md:text-base font-serif text-[#ffd885] tracking-wider leading-relaxed font-semibold drop-shadow-md">
-            “剑由铁铸，心由德成；五德存于心，方知手中之剑为何而出。”
-          </p>
-          <p className="text-xs sm:text-sm font-serif text-[#a8b8b0] tracking-wider leading-relaxed">
-            跟随春秋铸剑名师干将，历经仁、礼、义、智、信五重江湖问剑试炼
-          </p>
+          <div className="space-y-1.5 text-center">
+            <p className="text-sm sm:text-base md:text-lg font-serif text-[#ffd885] tracking-[0.18em] leading-relaxed font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              剑由铁铸，心由德成；
+            </p>
+            <p className="text-sm sm:text-base md:text-lg font-serif text-[#ffd885] tracking-[0.18em] leading-relaxed font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              五德存于心，方知手中之剑为何而出。
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Bottom Start Button Styled as Heavy Bronze Stele Plaque */}
-      <div className="relative z-10 text-center pb-3 sm:pb-5">
+      {/* Bottom Start Button & Placement of Journey Intro Text */}
+      <div className="relative z-10 text-center pb-4 sm:pb-6 flex flex-col items-center">
         <button
           id="title-btn-start"
           onClick={() => {
@@ -139,8 +141,8 @@ export const TitleView: React.FC<TitleViewProps> = ({
           <span className="text-[#c5a059] group-hover:text-white ml-2">◇</span>
         </button>
 
-        <p className="text-[11px] font-serif text-[#6d8a7e] mt-2.5 tracking-wider">
-          滑动鼠标挥洒剑气 · 悟透五德重铸绝世仁剑
+        <p className="text-xs sm:text-sm font-serif text-[#a8b8b0] mt-3 tracking-wider leading-relaxed max-w-xl text-center">
+          跟随春秋铸剑师干将，历经仁、礼、义、智、信五重江湖问剑试炼
         </p>
       </div>
     </div>

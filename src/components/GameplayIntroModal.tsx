@@ -26,10 +26,10 @@ export const GameplayIntroModal: React.FC<GameplayIntroModalProps> = ({ isOpen, 
             <span className="text-[#ffd885] text-lg">◇</span>
             <div>
               <h2 className="text-base sm:text-lg font-serif font-bold text-[#f5efe3] tracking-widest flex items-center gap-2">
-                <span>【 问剑心法 · 玩法介绍 】</span>
+                <span>【 以五德问剑 · 玩法介绍 】</span>
               </h2>
               <p className="text-xs font-serif text-[#7bb39d] tracking-wider">
-                春秋铸心 · 以德驭锋 · 知进退 · 刚柔并济
+                春秋铸心 · 以德驭锋 · 刚柔并济 · 剑心重铸
               </p>
             </div>
           </div>
@@ -49,55 +49,45 @@ export const GameplayIntroModal: React.FC<GameplayIntroModalProps> = ({ isOpen, 
         {/* Main Gameplay Content */}
         <div className="relative z-10 space-y-4 my-auto py-2 text-left">
           {/* Paragraph 1 */}
-          <div className="flex items-start gap-2.5">
+          <div className="flex items-start gap-2.5 bg-[#131d19]/60 p-3 rounded-sm border border-[#23352e]">
             <span className="text-[#ffd885] mt-0.5">◆</span>
-            <p className="font-serif text-xs sm:text-sm md:text-base text-[#d8cbb8] leading-relaxed tracking-wide">
-              这一路，你将与干将一同经历五段关于<strong className="text-[#ffd885] font-semibold">“剑”</strong>的春秋金石故事。
+            <p className="font-serif text-xs sm:text-sm md:text-base text-[#e6dbca] leading-relaxed tracking-wide">
+              跟随干将踏上问剑之旅，依次完成五关剑道试炼。
             </p>
           </div>
 
           {/* Paragraph 2 */}
-          <div className="flex items-start gap-2.5">
+          <div className="flex items-start gap-2.5 bg-[#131d19]/60 p-3.5 rounded-sm border border-[#23352e]">
             <span className="text-[#ffd885] mt-0.5">◆</span>
-            <p className="font-serif text-xs sm:text-sm md:text-base text-[#d8cbb8] leading-relaxed tracking-wide">
-              从识剑、持剑到出剑，在一次次<span className="text-[#ffd885] font-medium">点击、滑动、蓄力、判断与闪避</span>中，学会如何控制力量，如何圆柔进退，也学会在面对不义与困境时，坚守自己的选择与承诺。
+            <p className="font-serif text-xs sm:text-sm md:text-base text-[#e6dbca] leading-relaxed tracking-wide">
+              在不同关卡中，通过<strong className="text-[#ffd885]">点击、滑动、判断与闪避</strong>等操作，完成<span className="text-[#7bb39d] font-medium">锻剑、格挡、出招、剑法选择与躲避障碍</span>等挑战。
             </p>
           </div>
 
-          {/* Highlight Key Principles Callout */}
-          <div className="p-3.5 sm:p-4 rounded-sm bg-[#131d19] border border-[#2e473d] space-y-2 shadow-inner">
-            <div className="font-serif text-xs sm:text-sm text-[#ffd885] leading-relaxed tracking-wider flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#ffd885] shrink-0" />
-              <span>你需要知道何时出剑，何时收剑；</span>
+          {/* Paragraph 3 */}
+          <div className="p-4 rounded-sm bg-[#131d19] border border-[#3b554b] space-y-3 shadow-inner">
+            <div className="flex items-start gap-2.5">
+              <span className="text-[#d64d3e] mt-0.5">◆</span>
+              <p className="font-serif text-xs sm:text-sm md:text-base text-[#e6dbca] leading-relaxed tracking-wide">
+                每完成一关，即可分别点亮对应五德——
+              </p>
             </div>
-            <div className="font-serif text-xs sm:text-sm text-[#7bb39d] leading-relaxed tracking-wider flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#7bb39d] shrink-0" />
-              <span>何时以刚破局，何时以柔化力；</span>
-            </div>
-            <div className="font-serif text-xs sm:text-sm text-[#dfba73] leading-relaxed tracking-wider flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#dfba73] shrink-0" />
-              <span>也要在一次次抉择中，守住心中的道义。</span>
-            </div>
-          </div>
 
-          {/* Five Virtues Summary */}
-          <div className="space-y-2 pt-1">
-            <p className="font-serif text-xs sm:text-sm md:text-base text-[#d8cbb8] leading-relaxed tracking-wide">
-              五段旅程，对应五种德性：
-            </p>
-            <div className="flex items-center justify-center gap-3 sm:gap-6 py-2 px-3 rounded-sm bg-[#131d19] border border-[#2b3e36]">
-              <span className="font-serif text-base sm:text-lg text-[#5cb87a] font-bold">仁</span>
+            {/* Five Virtues Badges Row */}
+            <div className="flex items-center justify-center gap-2 sm:gap-4 py-2 px-3 rounded-sm bg-[#0a0f0d] border border-[#2b3e36]">
+              <span className="font-serif text-base sm:text-lg text-[#5cb87a] font-bold px-2 py-0.5 bg-[#16241e] rounded-sm border border-[#5cb87a]/40 shadow-sm">仁</span>
               <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#dfba73] font-bold">礼</span>
+              <span className="font-serif text-base sm:text-lg text-[#dfba73] font-bold px-2 py-0.5 bg-[#242116] rounded-sm border border-[#dfba73]/40 shadow-sm">礼</span>
               <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#d64d3e] font-bold">义</span>
+              <span className="font-serif text-base sm:text-lg text-[#d64d3e] font-bold px-2 py-0.5 bg-[#261716] rounded-sm border border-[#d64d3e]/40 shadow-sm">义</span>
               <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#66a3d2] font-bold">智</span>
+              <span className="font-serif text-base sm:text-lg text-[#66a3d2] font-bold px-2 py-0.5 bg-[#162026] rounded-sm border border-[#66a3d2]/40 shadow-sm">智</span>
               <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#f5efe3] font-bold">信</span>
+              <span className="font-serif text-base sm:text-lg text-[#f5efe3] font-bold px-2 py-0.5 bg-[#222421] rounded-sm border border-[#f5efe3]/40 shadow-sm">信</span>
             </div>
-            <p className="font-serif text-xs sm:text-sm text-[#9ab3a6] leading-relaxed tracking-wide text-center pt-1">
-              每完成一段历练，便点亮一德，也补全一分破碎的剑心。
+
+            <p className="font-serif text-xs sm:text-sm text-[#ffd885] leading-relaxed tracking-wide text-center font-medium pt-1">
+              补全破碎的剑心，最终找到“为何持剑”的答案。
             </p>
           </div>
         </div>

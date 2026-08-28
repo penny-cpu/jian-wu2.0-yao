@@ -47,7 +47,7 @@ export const HUD: React.FC<HUDProps> = ({
           <div className="flex items-center gap-2 mr-1">
             <span className="font-serif font-bold text-[#f5efe3] text-sm sm:text-base md:text-lg tracking-widest flex items-center gap-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
               <span className="w-2 h-2 rotate-45 bg-[#b83a2d] shadow-[0_0_8px_#b83a2d] inline-block" />
-              <span>五德融剑 · 刚柔舞韵</span>
+              <span>五徳剑道</span>
             </span>
           </div>
         )}
@@ -59,10 +59,10 @@ export const HUD: React.FC<HUDProps> = ({
             onOpenManual();
           }}
           className="flex items-center gap-1 px-2.5 py-1.5 rounded-sm bg-[#1e2e28] border border-[#446558] hover:border-[#dfba73] text-[#ffd885] hover:text-[#fff] transition-all text-xs font-serif cursor-pointer shadow-md active:scale-95"
-          title="查看江湖剑谱与侠客令"
+          title="查看我的闯关"
         >
           <Award className="w-3.5 h-3.5 text-[#ffd885]" />
-          <span className="font-bold">剑谱·侠客令</span>
+          <span className="font-bold">我的闯关</span>
         </button>
 
         <button
