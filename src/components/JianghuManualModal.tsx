@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { VirtueState, VirtueId, SwordTechnique } from '../types';
 import { sound } from '../audio';
-import { X, BookOpen, Bookmark, Award, Feather, Lock, Play } from 'lucide-react';
+import { X, BookOpen, Bookmark, Award, Feather, Lock, Play, Sparkles } from 'lucide-react';
 import { VideoModal } from './VideoModal';
 
 interface JianghuManualModalProps {
@@ -222,7 +222,7 @@ export const JianghuManualModal: React.FC<JianghuManualModalProps> = ({
         <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-b border-r border-[#dfba73]" />
 
         {/* Top Bar with Title & Close */}
-        <div className="relative z-10 flex items-center justify-between border-b border-[#2b3e36] pb-2 mb-2.5">
+        <div className="relative z-10 flex items-center justify-between border-b border-[#2b3e36] pb-2 mb-2">
           <div className="flex items-center gap-2">
             <span className="text-[#ffd885] text-base">◇</span>
             <div>
@@ -246,6 +246,51 @@ export const JianghuManualModal: React.FC<JianghuManualModalProps> = ({
             <X className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Central Master Congratulatory Slogan Banner when All 5 Virtues are Completed */}
+        {unlockedCount >= 5 && (
+          <div className="relative z-20 mb-2 p-2.5 sm:p-3 rounded-sm bg-gradient-to-r from-[#172720] via-[#2a4237] to-[#172720] border-2 border-[#dfba73] shadow-[0_0_35px_rgba(223,186,115,0.45),inset_0_0_20px_rgba(223,186,115,0.2)] text-center overflow-hidden animate-in fade-in zoom-in-95 duration-500">
+            {/* Background glowing radiating pulse */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none flex items-center justify-center">
+              <div className="w-80 h-80 rounded-full bg-[radial-gradient(circle,#ffd885_0%,transparent_70%)] animate-pulse" />
+            </div>
+
+            {/* Corner accents */}
+            <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-[#ffd885]" />
+            <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-[#ffd885]" />
+            <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-[#ffd885]" />
+            <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-[#ffd885]" />
+
+            {/* Central Slogan Content */}
+            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-[#9a2b20] border border-[#dfba73] flex items-center justify-center text-[#faece8] font-serif text-[11px] sm:text-xs font-bold shadow-md shrink-0">
+                宗师
+              </div>
+
+              <div className="text-center sm:text-left">
+                <h3 className="text-sm sm:text-base md:text-lg font-serif font-extrabold text-[#ffd885] tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] flex items-center justify-center sm:justify-start gap-1.5">
+                  <Sparkles className="w-4 h-4 text-[#ffd885] animate-spin" style={{ animationDuration: '6s' }} />
+                  <span>五德齐聚，剑心重铸，恭喜成为剑道宗师</span>
+                  <Sparkles className="w-4 h-4 text-[#ffd885] animate-spin" style={{ animationDuration: '6s' }} />
+                </h3>
+                <p className="text-[10px] sm:text-[11px] font-serif text-[#e6dbca] mt-0.5 tracking-wider">
+                  仁·礼·义·智·信 五德圆满 · 以德驭锋 · 春秋铸道大成
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  sound.playVirtueChime();
+                  setTimeout(() => sound.playGuqinStrum(), 200);
+                }}
+                className="px-2.5 py-1 rounded-sm bg-[#16221e] border border-[#c5a059] hover:border-white text-[#ffd885] hover:text-white text-[11px] font-serif transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                title="鸣金贺赞"
+              >
+                ✦ 鸣金贺赞 🎶
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* 3 Tab Navigation Ordered: 侠客·剑修境界 ➔ 五德·感悟书签 ➔ 问剑·剑谱绝学 */}
         <div className="relative z-10 flex gap-2 mb-2.5">
