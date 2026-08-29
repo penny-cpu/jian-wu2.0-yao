@@ -314,6 +314,7 @@ export const Level4View: React.FC<Level4ViewProps> = ({ onCompleteLevel, onBackT
           badgeColor="#dfba73"
           title="以智破妄 · 洞察天地"
           accentColor="#ffd885"
+          bgImageKey="level4_bg_summary"
           lines={[
             '神兽退伏，空谷云开。',
             '“剑法非仅力与势之争，更在静观应变、因势利导。”',

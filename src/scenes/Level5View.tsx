@@ -619,6 +619,7 @@ export const Level5View: React.FC<Level5ViewProps> = ({ onCompleteLevel, onBackT
           badgeColor="#dfba73"
           title="履信守诺 · 孤山挂剑"
           accentColor="#ffd885"
+          bgImageKey="level5_bg_summary"
           lines={[
             '绝顶风息，长剑悬于古树枝头，静对苍穹。',
             '“剑立天地间，一诺重千钧。”',

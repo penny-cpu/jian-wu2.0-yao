@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { VirtueState, VirtueId, SwordTechnique } from '../types';
 import { sound } from '../audio';
+import { getPlaceholderImage } from '../assets/placeholderGenerator';
 import { X, BookOpen, Bookmark, Award, Feather, Lock, Play, Sparkles } from 'lucide-react';
 import { VideoModal } from './VideoModal';
 
@@ -212,7 +213,19 @@ export const JianghuManualModal: React.FC<JianghuManualModalProps> = ({
         />
       )}
 
-      <div className="relative w-full max-w-3xl bg-[#0e1512] border border-[#3b554b] rounded-sm shadow-[0_0_60px_rgba(0,0,0,0.98)] p-3.5 sm:p-5 flex flex-col justify-between max-h-[94vh]">
+      <div
+        className="relative w-full max-w-3xl bg-[#0e1512] border border-[#3b554b] rounded-sm shadow-[0_0_60px_rgba(0,0,0,0.98)] p-3.5 sm:p-5 flex flex-col justify-between max-h-[94vh] bg-cover bg-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${getPlaceholderImage(
+            'manual_bg',
+            '我的闯关',
+            '五德修习 · 剑道心得',
+            '#ffd885'
+          )})`,
+        }}
+      >
+        {/* Background Dark Overlay for Readability */}
+        <div className="absolute inset-0 bg-[#0a0f0d]/92 backdrop-blur-[2px] pointer-events-none z-0" />
         
         {/* Bronze Inset Border & Corner Rivets */}
         <div className="absolute inset-1.5 border border-[#dfba73]/20 pointer-events-none z-0" />

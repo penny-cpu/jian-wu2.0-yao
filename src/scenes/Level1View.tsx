@@ -3,6 +3,7 @@ import { sound } from '../audio';
 import { VideoModal } from '../components/VideoModal';
 import { getPlaceholderImage } from '../assets/placeholderGenerator';
 import { WuxiaEpilogue } from '../components/WuxiaEpilogue';
+import { UIButton } from '../components/UIButton';
 import { Sparkles, Flame, Hammer, Swords, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 interface Level1ViewProps {
@@ -379,6 +380,7 @@ export const Level1View: React.FC<Level1ViewProps> = ({ onCompleteLevel, onBackT
           badgeColor="#5cb87a"
           title="剑有锋芒 · 亦可生暖"
           accentColor="#5cb87a"
+          bgImageKey="level1_bg_summary"
           lines={[
             '火光渐暖，干将轻抚剑身，久久无言。',
             '“剑有双刃，可伤人，亦可助人；”',

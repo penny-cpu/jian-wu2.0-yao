@@ -422,6 +422,7 @@ export const Level3View: React.FC<Level3ViewProps> = ({ onCompleteLevel, onBackT
           badgeColor="#dfba73"
           title="当为则为 · 仗义卫道"
           accentColor="#ffd885"
+          bgImageKey="level3_bg_summary"
           lines={[
             '恶霸散退，玉琅安然无恙。',
             '“剑不向无辜之人，但见人间不平，当仗义而出。”',

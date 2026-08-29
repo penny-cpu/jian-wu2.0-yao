@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BambooLeavesEffect } from './BambooLeavesEffect';
 import { sound } from '../audio';
+import { getPlaceholderImage } from '../assets/placeholderGenerator';
 import { FastForward, Sparkles } from 'lucide-react';
 
 export interface EpilogueLine {
@@ -21,6 +22,7 @@ interface WuxiaEpilogueProps {
   onComplete: () => void;
   accentColor?: string;
   stepDelayMs?: number;
+  bgImageKey?: string;
 }
 
 export const WuxiaEpilogue: React.FC<WuxiaEpilogueProps> = ({
@@ -33,6 +35,7 @@ export const WuxiaEpilogue: React.FC<WuxiaEpilogueProps> = ({
   onComplete,
   accentColor = '#ffd700',
   stepDelayMs = 1200,
+  bgImageKey,
 }) => {
   // Normalize lines to structured objects
   const normalizedLines: EpilogueLine[] = lines.map(item => {
@@ -52,6 +55,10 @@ export const WuxiaEpilogue: React.FC<WuxiaEpilogueProps> = ({
   const totalSteps = 2 + normalizedLines.length + 1;
   const [visibleStep, setVisibleStep] = useState<number>(0);
   const [isCompletedReveal, setIsCompletedReveal] = useState<boolean>(false);
+
+  const bgUrl = bgImageKey
+    ? getPlaceholderImage(bgImageKey, `${levelName || '关卡'} · 通关小结`, title, accentColor)
+    : '';
 
   useEffect(() => {
     // Start revealing step by step at uniform pace
@@ -78,7 +85,8 @@ export const WuxiaEpilogue: React.FC<WuxiaEpilogueProps> = ({
 
   return (
     <div
-      className="relative w-full h-full flex flex-col items-center justify-between px-3 sm:px-6 py-2 sm:py-3 select-none overflow-hidden"
+      className="relative w-full h-full flex flex-col items-center justify-between px-3 sm:px-6 py-2 sm:py-3 select-none overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: bgUrl ? `url(${bgUrl})` : undefined }}
       onClick={() => {
         // If still revealing, clicking reveals next or all
         if (visibleStep < totalSteps) {
@@ -86,6 +94,9 @@ export const WuxiaEpilogue: React.FC<WuxiaEpilogueProps> = ({
         }
       }}
     >
+      {/* Background Dimming & Inscription Overlay */}
+      {bgUrl && <div className="absolute inset-0 bg-[#080d0b]/85 backdrop-blur-[1px] pointer-events-none" />}
+
       {/* 1. Martial Bamboo Forest & Falling Leaves + Sword Qi Effect (剑气江湖的竹林落叶特效动画) */}
       <BambooLeavesEffect />
 

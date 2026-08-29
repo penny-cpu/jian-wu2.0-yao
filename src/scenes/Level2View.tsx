@@ -452,6 +452,7 @@ export const Level2View: React.FC<Level2ViewProps> = ({ onCompleteLevel, onBackT
           badgeColor="#d64d3e"
           title="剑有锋芒 · 亦须知礼"
           accentColor="#ffd885"
+          bgImageKey="level2_bg_summary"
           lines={[
             '林风渐息，干将双手接过长剑，垂锋而立。',
             '“从前，他只知剑有锋芒，却未曾想过，”',

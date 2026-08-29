@@ -1,40 +1,71 @@
 // Placeholder Asset Provider with Real Image & Video Fallbacks
 
 export const ASSET_MAP: Record<string, string> = {
-  // BGs
+  // Title & Prologue
   intro_bg: 'assets/images/intro_bg.jpg',
+  cover_bg: 'assets/images/intro_bg.jpg',
   intro_bg2: 'assets/images/intro_bg2.jpg',
+  story_prologue_bg: 'assets/images/intro_bg2.jpg',
   map_scroll_bg: 'assets/images/map_scroll_bg.jpg',
+  manual_bg: 'assets/images/manual_modal_bg.jpg',
+  
+  // Character Card Portraits
   char_ganjiang: 'assets/images/char_ganjiang.jpg',
   char_moye: 'assets/images/char_moye.jpg',
   char_ouyezi: 'assets/images/char_ouyezi.jpg',
+
+  // Level 1: 仁
   level1_bg_forge: 'assets/images/level1_bg_forge.jpg',
   level1_bg_grind: 'assets/images/level1_bg_grind.jpg',
   level1_bg_chop: 'assets/images/level1_bg_chop.jpg',
+  level1_bg_summary: 'assets/images/level1_bg_summary.jpg',
+
+  // Level 2: 礼
   level2_bg_parry: 'assets/images/level2_bg_parry.jpg',
   level2_bg_dialogue: 'assets/images/level2_bg_dialogue.jpg',
   level2_bg_receive: 'assets/images/level2_bg_receive.jpg',
   level2_bg_salute: 'assets/images/level2_bg_salute.jpg',
+  level2_bg_summary: 'assets/images/level2_bg_summary.jpg',
+
+  // Level 3: 义
   level3_bg_combat: 'assets/images/level3_bg_combat.jpg',
   level3_bg_jade: 'assets/images/level3_bg_jade.jpg',
   level3_bg_release: 'assets/images/level3_bg_release.jpg',
+  level3_bg_summary: 'assets/images/level3_bg_summary.jpg',
   level3_slash: 'assets/images/level3_slash.jpg',
   level3_thrust: 'assets/images/level3_thrust.jpg',
   level3_jade_icon: 'assets/images/level3_jade_icon.png',
+
+  // Level 4: 智
   level4_bg_secret: 'assets/images/level4_bg_secret.jpg',
   level4_bg_step12: 'assets/images/level4_bg_step12.jpg',
   level4_bg_step34: 'assets/images/level4_bg_step34.jpg',
   level4_bg_step5: 'assets/images/level4_bg_step5.jpg',
+  level4_bg_summary: 'assets/images/level4_bg_summary.jpg',
+
+  // Level 5: 信
   level5_bg_run1: 'assets/images/level5_bg_run1.jpg',
   level5_bg_run2: 'assets/images/level5_bg_run2.jpg',
   level5_bg_tree: 'assets/images/level5_bg_tree.jpg',
+  level5_bg_summary: 'assets/images/level5_bg_summary.jpg',
+
+  // Final Chapter
   final_bg_furnace: 'assets/images/final_bg_furnace.jpg',
-  final_chapter_bg: 'assets/images/final_bg_furnace.jpg',
+  final_chapter_bg: 'assets/images/final_chapter_bg.jpg',
+  final_summary_bg: 'assets/images/final_summary_bg.jpg',
   memory_ren: 'assets/images/memory_ren.jpg',
   memory_li: 'assets/images/memory_li.jpg',
   memory_yi: 'assets/images/memory_yi.jpg',
   memory_zhi: 'assets/images/memory_zhi.jpg',
   memory_xin: 'assets/images/memory_xin.jpg',
+
+  // UI Buttons
+  btn_primary_bg: 'assets/images/ui_btn_primary.png',
+  btn_secondary_bg: 'assets/images/ui_btn_secondary.png',
+  btn_bronze_bg: 'assets/images/ui_btn_bronze.png',
+  btn_jade_bg: 'assets/images/ui_btn_jade.png',
+  btn_crimson_bg: 'assets/images/ui_btn_crimson.png',
+  btn_action_bg: 'assets/images/ui_btn_action.png',
 };
 
 export const VIDEO_MAP: Record<string, string> = {
@@ -56,6 +87,52 @@ export const VIDEO_MAP: Record<string, string> = {
   level4_tech_4: 'assets/video/level4_tech_4.mp4',
   level4_tech_5: 'assets/video/level4_tech_5.mp4',
 };
+
+// Generates Wuxia UI Button Textured Background Asset Placeholder
+export function getButtonImage(key: string, variant: string = 'primary'): string {
+  const colorMap: Record<string, { start: string; mid: string; end: string; border: string }> = {
+    primary: { start: '#1f2e27', mid: '#2a4237', end: '#1a2822', border: '#dfba73' },
+    bronze: { start: '#24201a', mid: '#362f25', end: '#1e1a14', border: '#c5a059' },
+    jade: { start: '#12261e', mid: '#1e3d30', end: '#0f1f18', border: '#5cb87a' },
+    crimson: { start: '#2d1816', mid: '#42201d', end: '#241312', border: '#d64d3e' },
+    secondary: { start: '#16221e', mid: '#20302a', end: '#141d1a', border: '#3b554b' },
+    action: { start: '#c5a059', mid: '#ffd885', end: '#b38d45', border: '#f5efe3' },
+    subtle: { start: '#111916', mid: '#192420', end: '#0d1311', border: '#2b3e36' },
+  };
+
+  const palette = colorMap[variant] || colorMap.primary;
+
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="300" height="70" viewBox="0 0 300 70">
+    <defs>
+      <linearGradient id="btnGrad_${variant}" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="${palette.start}" />
+        <stop offset="50%" stop-color="${palette.mid}" />
+        <stop offset="100%" stop-color="${palette.end}" />
+      </linearGradient>
+      <linearGradient id="btnBorder_${variant}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${palette.border}" />
+        <stop offset="50%" stop-color="#ffffff" stop-opacity="0.8" />
+        <stop offset="100%" stop-color="${palette.border}" />
+      </linearGradient>
+    </defs>
+    
+    <!-- Button Background Pill / Slab -->
+    <rect x="2" y="2" width="296" height="66" rx="3" fill="url(#btnGrad_${variant})" />
+    
+    <!-- Ancient Bronze Decorative Pattern / Inscription Texture -->
+    <path d="M10,8 L290,8" stroke="${palette.border}" stroke-width="0.8" opacity="0.3" stroke-dasharray="8 4" />
+    <path d="M10,62 L290,62" stroke="${palette.border}" stroke-width="0.8" opacity="0.3" stroke-dasharray="8 4" />
+    
+    <!-- Corner Rivets / Filigree -->
+    <polygon points="6,6 16,6 6,16" fill="${palette.border}" opacity="0.8" />
+    <polygon points="294,6 284,6 294,16" fill="${palette.border}" opacity="0.8" />
+    <polygon points="6,64 16,64 6,54" fill="${palette.border}" opacity="0.8" />
+    <polygon points="294,64 284,64 294,54" fill="${palette.border}" opacity="0.8" />
+  </svg>
+  `;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
 
 // Generates Chinese Silk Landscape Scroll Map placeholder (Fig 3 style: 《九州五德圖 / 京郊八景》)
 export function getMapScrollPlaceholder(): string {

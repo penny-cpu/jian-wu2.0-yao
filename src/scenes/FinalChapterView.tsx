@@ -198,9 +198,20 @@ export const FinalChapterView: React.FC<FinalChapterViewProps> = ({ onBackToMap 
             </h3>
 
             {/* Visual Image placeholder */}
-            <div className="w-full h-44 sm:h-48 rounded-sm bg-[#111916] border border-[#2b3e36] flex flex-col items-center justify-center p-4 mb-4 overflow-hidden">
-              <span className="text-5xl mb-2">🗡️</span>
-              <p className="text-sm font-serif text-[#f5efe3] italic max-w-sm leading-relaxed">
+            <div
+              className="w-full h-44 sm:h-48 rounded-sm bg-[#111916] border border-[#2b3e36] flex flex-col items-center justify-center p-4 mb-4 overflow-hidden bg-cover bg-center relative"
+              style={{
+                backgroundImage: `url(${getPlaceholderImage(
+                  activeMemory.imgKey,
+                  activeMemory.title,
+                  activeMemory.desc,
+                  activeMemory.color
+                )})`,
+              }}
+            >
+              <div className="absolute inset-0 bg-[#0a0f0d]/75 backdrop-blur-[1px]" />
+              <span className="relative z-10 text-4xl mb-2">🗡️</span>
+              <p className="relative z-10 text-sm font-serif text-[#f5efe3] italic max-w-sm leading-relaxed text-center">
                 {activeMemory.desc}
               </p>
             </div>
@@ -234,6 +245,7 @@ export const FinalChapterView: React.FC<FinalChapterViewProps> = ({ onBackToMap 
           badgeColor="#dfba73"
           title="五德圆融 · 刚柔舞韵"
           accentColor="#ffd885"
+          bgImageKey="final_summary_bg"
           lines={[
             '“仁以持心，礼以循序，义以决断，智以破妄，信以立本。”',
             '五德既成，炉火复燃。',
