@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
 import { sound } from '../audio';
 import { X, Sparkles } from 'lucide-react';
+import { BronzeCornerPlaque } from './BronzeCornerPlaque';
+import { BronzeFiligreeButton } from './BronzeFiligreeButton';
+
+/* =========================================================================
+ * 🎭【春秋人物志 · 三大主角人物形象背景底图配置位置】
+ * 如需更换各人物（干将 / 莫邪 / 欧冶子）的背景立绘底图，可直接在下方对应修改图片路径：
+ * ========================================================================= */
 import ganjiangBioBg from '../assets/images/ganjiang_bio_bg_1787798389392.jpg';
+import moyeBioBg from '../assets/images/moye_bio_bg_1788277575393.jpg';
+import ouyeziBioBg from '../assets/images/ouyezi_bio_bg_1788277591224.jpg';
+
+export const CHARACTER_BIO_IMAGES: Record<string, string> = {
+  ganjiang: ganjiangBioBg, // 干将人物形象底图
+  moye: moyeBioBg,         // 莫邪人物形象底图
+  ouyezi: ouyeziBioBg,     // 欧冶子人物形象底图
+};
 
 interface CharacterModalProps {
   isOpen: boolean;
@@ -19,6 +34,7 @@ interface CharacterDossier {
   character: string;// 心性
   swordHeart: string;// 剑心
   question: string; // 所问
+  bgImage: string;  // 人物立绘底图
 }
 
 export const CharacterModal: React.FC<CharacterModalProps> = ({ isOpen, onClose }) => {
@@ -36,6 +52,7 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({ isOpen, onClose 
       character: '沉静 · 守正 · 善思',
       swordHeart: '以剑自省，以德驭锋。',
       question: '好剑，究竟为何而生？',
+      bgImage: CHARACTER_BIO_IMAGES.ganjiang,
     },
     {
       id: 'moye',
@@ -48,6 +65,7 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({ isOpen, onClose 
       character: '坚毅 · 沉静 · 纯澈 · 仁善',
       swordHeart: '夫子铸刚，妾身铸柔；以柔克刚。',
       question: '剑有灵犀，何时方能止息人间兵戈？',
+      bgImage: CHARACTER_BIO_IMAGES.moye,
     },
     {
       id: 'ouyezi',
@@ -60,6 +78,7 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({ isOpen, onClose 
       character: '通达 · 仁厚 · 虚怀 · 超然',
       swordHeart: '大巧若拙，以德化剑，剑通天地。',
       question: '天下之利器，可能尽归于仁德？',
+      bgImage: CHARACTER_BIO_IMAGES.ouyezi,
     },
   ];
 
@@ -69,16 +88,9 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({ isOpen, onClose 
 
   return (
     <div className="fixed inset-0 z-50 bg-[#060a08]/92 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 select-none overflow-y-auto">
-      {/* Outer Card Container */}
-      <div className="relative w-full max-w-4xl bg-[#0e1613] border-2 border-[#3b554b] rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.98)] overflow-hidden my-auto flex flex-col">
+      {/* Outer Card Container with Warring States Bronze Corner Linework (图4设计) */}
+      <BronzeCornerPlaque className="relative w-full max-w-4xl bg-[#0e1613] rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.98)] overflow-hidden my-auto flex flex-col p-0">
         
-        {/* Ancient Bronze Corner Inset Accents */}
-        <div className="absolute inset-1.5 border border-[#dfba73]/20 pointer-events-none z-30" />
-        <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#dfba73] z-30" />
-        <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#dfba73] z-30" />
-        <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-[#dfba73] z-30" />
-        <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#dfba73] z-30" />
-
         {/* Top Floating Header & Character Selector */}
         <div className="relative z-40 w-full px-4 py-2 bg-[#0a0f0d]/90 border-b border-[#2b3e36] flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -122,32 +134,29 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({ isOpen, onClose 
           </button>
         </div>
 
-        {/* Main Visual Presentation (Mirroring the Reference Image) */}
+        {/* Main Visual Presentation (无遮罩纯净呈现人物立绘全貌) */}
         <div className="relative w-full aspect-[16/9] min-h-[380px] sm:min-h-[440px] md:min-h-[480px] bg-[#0c1310] flex items-stretch overflow-hidden">
           
-          {/* Left / Main Canvas Background Image */}
+          {/* Main Canvas Background Image (无遮罩，完整展现人物、服饰与铸剑背景) */}
           <div
-            className="absolute inset-0 bg-cover bg-left md:bg-center"
+            key={current.id}
+            className="absolute inset-0 bg-cover bg-left md:bg-center transition-all duration-300 ease-out"
             style={{
-              backgroundImage: `url(${ganjiangBioBg})`,
-              filter: 'brightness(0.92) contrast(1.05)',
+              backgroundImage: `url(${current.bgImage})`,
             }}
           />
-
-          {/* Vignette Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40 pointer-events-none" />
 
           {/* Left Vertical Calligraphy & Character Seal Area */}
           <div className="relative z-20 p-6 sm:p-8 flex flex-col justify-between select-none pointer-events-none">
             {/* Top Left Calligraphy Name & Subtitle */}
             <div className="space-y-3">
-              {/* Calligraphy Name in Vertical Orientation */}
-              <div className="text-4xl sm:text-5xl md:text-6xl font-brush text-[#e8ded0] tracking-[0.25em] [writing-mode:vertical-rl] drop-shadow-[0_4px_12px_rgba(0,0,0,0.95)]">
+              {/* Calligraphy Name in Vertical Orientation with sharp stroke shadow */}
+              <div className="text-4xl sm:text-5xl md:text-6xl font-brush text-[#fdfaf5] tracking-[0.25em] [writing-mode:vertical-rl] drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
                 {current.name}
               </div>
 
               {/* Subtitle Vertical Flow */}
-              <div className="text-xs sm:text-sm font-serif text-[#ffd885] tracking-[0.3em] [writing-mode:vertical-rl] opacity-90 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] pt-1">
+              <div className="text-xs sm:text-sm font-serif text-[#ffd885] tracking-[0.3em] [writing-mode:vertical-rl] opacity-95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] pt-1">
                 {current.subTitle}
               </div>
             </div>
@@ -243,20 +252,21 @@ export const CharacterModal: React.FC<CharacterModalProps> = ({ isOpen, onClose 
           </div>
         </div>
 
-        {/* Bottom Footer Note */}
-        <div className="relative z-30 px-4 py-2 bg-[#0a0f0d] border-t border-[#2b3e36] flex items-center justify-between text-xs font-serif text-[#7bb39d]">
+        {/* Bottom Footer Note with Figure 3 BronzeFiligreeButton */}
+        <div className="relative z-30 px-4 py-2.5 bg-[#0a0f0d] border-t border-[#2b3e36] flex items-center justify-between text-xs font-serif text-[#7bb39d]">
           <span className="tracking-wider">◇ 春秋古卷 · 金石刻铭 · 传世名侠 ◇</span>
-          <button
+          <BronzeFiligreeButton
             onClick={() => {
               sound.playClick();
               onClose();
             }}
-            className="px-4 py-1 rounded-sm bg-[#16241e] border border-[#3b554b] hover:border-[#dfba73] text-[#ffd885] hover:text-white transition-all text-xs font-serif cursor-pointer active:scale-95"
+            variant="gold"
+            size="sm"
           >
             合上画卷
-          </button>
+          </BronzeFiligreeButton>
         </div>
-      </div>
+      </BronzeCornerPlaque>
     </div>
   );
 };

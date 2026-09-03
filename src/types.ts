@@ -1,3 +1,13 @@
+export interface AssetConfig {
+  backgroundImage?: string;
+  introVideo?: string;
+  outroVideo?: string;
+  summaryImage?: string;
+  stageImages?: Record<string, string>;
+  extraImages?: Record<string, string>;
+  extraVideos?: Record<string, string>;
+}
+
 export type VirtueId = 'REN' | 'LI' | 'YI' | 'ZHI' | 'XIN';
 
 export interface VirtueState {

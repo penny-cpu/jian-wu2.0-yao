@@ -1,8 +1,9 @@
 import React from 'react';
 import { sound } from '../audio';
-import { getPlaceholderImage, getButtonImage } from '../assets/placeholderGenerator';
+import { WuxiaPlaqueButton } from './WuxiaPlaqueButton';
+import { BronzeFiligreeButton } from './BronzeFiligreeButton';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'bronze' | 'jade' | 'crimson' | 'action' | 'subtle';
+export type ButtonVariant = 'primary' | 'secondary' | 'bronze' | 'jade' | 'crimson' | 'action' | 'subtle' | 'plaque' | 'filigree';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface UIButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,10 +11,13 @@ export interface UIButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElem
   size?: ButtonSize;
   icon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  bgAssetKey?: string; // e.g. 'btn_primary_bg', 'btn_bronze_bg', 'btn_jade_bg'
+  bgAssetKey?: string;
   useCustomBgImage?: boolean;
   soundType?: 'click' | 'sword' | 'parry' | 'hammer' | 'chime';
   glow?: boolean;
+  subtitle?: React.ReactNode;
+  asPlaque?: boolean;
+  asFiligree?: boolean;
 }
 
 export const UIButton: React.FC<UIButtonProps> = ({
@@ -23,17 +27,60 @@ export const UIButton: React.FC<UIButtonProps> = ({
   icon,
   rightIcon,
   bgAssetKey,
-  useCustomBgImage = true,
+  useCustomBgImage = false,
   soundType = 'click',
   glow = false,
+  subtitle,
+  asPlaque = false,
+  asFiligree = false,
   className = '',
   onClick,
   disabled,
   ...rest
 }) => {
-  // Determine asset key based on variant if not explicitly provided
-  const assetKey = bgAssetKey || `btn_${variant}_bg`;
-  const bgImgUrl = useCustomBgImage ? getButtonImage(assetKey, variant) : '';
+  // If explicitly requested as filigree or variant is filigree, render Figure 3 frameless centered bronze filigree button
+  if (asFiligree || variant === 'filigree') {
+    const filigreeVariant =
+      variant === 'jade' ? 'jade' : variant === 'crimson' ? 'crimson' : variant === 'bronze' ? 'bronze' : 'gold';
+    return (
+      <BronzeFiligreeButton
+        variant={filigreeVariant}
+        size={size}
+        leftOrnament={icon}
+        rightOrnament={rightIcon}
+        soundType={soundType}
+        glow={glow}
+        onClick={onClick}
+        disabled={disabled}
+        className={className}
+        {...rest}
+      >
+        {children}
+      </BronzeFiligreeButton>
+    );
+  }
+
+  // If explicitly requested as plaque or variant is plaque, render the ornate bronze plaque
+  if (asPlaque || variant === 'plaque') {
+    const plaqueVariant =
+      variant === 'jade' ? 'jade' : variant === 'crimson' ? 'crimson' : variant === 'action' ? 'gold' : 'bronze';
+    return (
+      <WuxiaPlaqueButton
+        variant={plaqueVariant}
+        size={size}
+        icon={rightIcon || icon}
+        subtitle={subtitle}
+        soundType={soundType}
+        glow={glow}
+        onClick={onClick}
+        disabled={disabled}
+        className={className}
+        {...rest}
+      >
+        {children}
+      </WuxiaPlaqueButton>
+    );
+  }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
@@ -46,56 +93,63 @@ export const UIButton: React.FC<UIButtonProps> = ({
     if (onClick) onClick(e);
   };
 
-  // Size styling classes
-  const sizeClasses: Record<ButtonSize, string> = {
-    sm: 'px-3 py-1 text-xs sm:text-xs gap-1.5 min-h-[30px]',
-    md: 'px-5 py-2 text-xs sm:text-sm gap-2 min-h-[38px]',
-    lg: 'px-8 py-3 text-sm sm:text-base gap-2.5 min-h-[46px]',
-    xl: 'px-10 py-3.5 sm:px-14 sm:py-4 text-base sm:text-lg gap-3 min-h-[54px]',
-  };
-
-  // Variant palette classes (border, text colors, gradients and shadow effects)
-  const variantClasses: Record<ButtonVariant, string> = {
-    primary:
-      'border-2 border-[#dfba73] text-[#ffd885] hover:text-white hover:border-[#fff] shadow-[0_0_20px_rgba(223,186,115,0.35)] hover:shadow-[0_0_30px_rgba(255,216,133,0.6)] bg-gradient-to-r from-[#1c2c25] via-[#2a4037] to-[#1c2c25]',
-    bronze:
-      'border border-[#c5a059] text-[#ffd885] hover:text-white hover:border-[#ffd885] shadow-[0_0_15px_rgba(197,160,89,0.25)] bg-[#1b2621]',
-    jade:
-      'border border-[#5cb87a] text-[#5cb87a] hover:text-white hover:border-[#a3f0bf] shadow-[0_0_15px_rgba(92,184,122,0.3)] bg-[#14231c]',
-    crimson:
-      'border border-[#d64d3e] text-[#ffd885] hover:text-white hover:border-[#ff9c91] shadow-[0_0_15px_rgba(214,77,62,0.35)] bg-gradient-to-r from-[#291716] via-[#3a1d1b] to-[#291716]',
-    secondary:
-      'border border-[#3b554b] text-[#c7beaf] hover:text-[#ffd885] hover:border-[#dfba73] shadow-md bg-[#16221e]',
-    action:
-      'border-2 border-[#ffd885] text-[#111916] bg-gradient-to-r from-[#dfba73] via-[#ffe6a3] to-[#dfba73] shadow-[0_0_25px_rgba(223,186,115,0.5)] hover:scale-105 font-extrabold',
-    subtle:
-      'border border-[#2b3e36] text-[#7bb39d] hover:text-[#ffd885] hover:border-[#3b554b] bg-[#111916]/80',
-  };
+  // Figure 3 compliant button: borderless sides, top & bottom line with centered bronze emblem
+  const sizeStyles = {
+    sm: { py: 'py-1.5 px-6', fontSize: 'text-xs sm:text-sm tracking-widest', crestW: 'w-14' },
+    md: { py: 'py-2 px-8 sm:px-10', fontSize: 'text-sm sm:text-base tracking-[0.2em]', crestW: 'w-20' },
+    lg: { py: 'py-2.5 px-10 sm:px-12', fontSize: 'text-base sm:text-lg tracking-[0.25em]', crestW: 'w-24' },
+    xl: { py: 'py-3.5 px-12 sm:px-16', fontSize: 'text-lg sm:text-xl tracking-[0.3em]', crestW: 'w-28' },
+  }[size];
 
   return (
     <button
       onClick={handleClick}
       disabled={disabled}
-      style={{
-        backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-      className={`group relative inline-flex items-center justify-center font-serif font-bold tracking-widest rounded-sm transition-all duration-300 select-none cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none ${
+      className={`group relative inline-flex flex-col items-center justify-center font-serif font-bold transition-all duration-300 select-none cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none ${
         glow ? 'animate-pulse' : ''
-      } ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}
+      } ${sizeStyles.py} ${className}`}
       {...rest}
     >
-      {/* Decorative Corner Filigree Pins */}
-      <span className="absolute top-0.5 left-0.5 w-1.5 h-1.5 border-t border-l border-[#dfba73]/70 pointer-events-none" />
-      <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 border-t border-r border-[#dfba73]/70 pointer-events-none" />
-      <span className="absolute bottom-0.5 left-0.5 w-1.5 h-1.5 border-b border-l border-[#dfba73]/70 pointer-events-none" />
-      <span className="absolute bottom-0.5 right-0.5 w-1.5 h-1.5 border-b border-r border-[#dfba73]/70 pointer-events-none" />
+      {/* Background layer without left/right borders */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#16241e]/85 to-transparent group-hover:via-[#22362c]/95 transition-all duration-300 pointer-events-none" />
+
+      {/* TOP FILIGREE LINE (Figure 3) */}
+      <div className="absolute top-0 inset-x-0 flex items-center justify-center pointer-events-none">
+        <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-[#a67c33] to-[#dfba73] opacity-80 group-hover:opacity-100" />
+        <div className="px-1 -top-[3px] relative shrink-0">
+          <svg width="60" height="8" viewBox="0 0 60 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 30 1 L 27 5 L 30 7 L 33 5 Z" fill="#ffd885" />
+            <path d="M 30 4 C 25 1 20 1 12 4 M 30 4 C 35 1 40 1 48 4" stroke="#dfba73" strokeWidth="0.9" fill="none" />
+            <circle cx="20" cy="4" r="0.8" fill="#ffd885" />
+            <circle cx="40" cy="4" r="0.8" fill="#ffd885" />
+          </svg>
+        </div>
+        <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent via-[#a67c33] to-[#dfba73] opacity-80 group-hover:opacity-100" />
+      </div>
 
       {/* Button Content */}
-      {icon && <span className="relative z-10 flex items-center">{icon}</span>}
-      <span className="relative z-10 whitespace-nowrap">{children}</span>
-      {rightIcon && <span className="relative z-10 flex items-center">{rightIcon}</span>}
+      <div className={`relative z-10 flex items-center justify-center gap-2 text-[#ffd885] group-hover:text-white transition-colors drop-shadow-sm ${sizeStyles.fontSize}`}>
+        {icon && <span className="flex items-center">{icon}</span>}
+        <span className="whitespace-nowrap">{children}</span>
+        {rightIcon && <span className="flex items-center">{rightIcon}</span>}
+      </div>
+
+      {/* BOTTOM FILIGREE LINE (Figure 3) */}
+      <div className="absolute bottom-0 inset-x-0 flex items-center justify-center pointer-events-none">
+        <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-[#a67c33] to-[#dfba73] opacity-80 group-hover:opacity-100" />
+        <div className="px-1 -bottom-[3px] relative shrink-0 rotate-180">
+          <svg width="60" height="8" viewBox="0 0 60 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 30 1 L 27 5 L 30 7 L 33 5 Z" fill="#ffd885" />
+            <path d="M 30 4 C 25 1 20 1 12 4 M 30 4 C 35 1 40 1 48 4" stroke="#dfba73" strokeWidth="0.9" fill="none" />
+            <circle cx="20" cy="4" r="0.8" fill="#ffd885" />
+            <circle cx="40" cy="4" r="0.8" fill="#ffd885" />
+          </svg>
+        </div>
+        <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent via-[#a67c33] to-[#dfba73] opacity-80 group-hover:opacity-100" />
+      </div>
+
+      {/* Hover Gold Shine */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(223,186,115,0.25),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </button>
   );
 };

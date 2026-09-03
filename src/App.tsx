@@ -16,7 +16,7 @@ import { Level3View } from './scenes/Level3View';
 import { Level4View } from './scenes/Level4View';
 import { Level5View } from './scenes/Level5View';
 import { FinalChapterView } from './scenes/FinalChapterView';
-import { sound } from './audio';
+import { sound, SoundFXMode } from './audio';
 
 export default function App() {
   const [currentScene, setCurrentScene] = useState<GameScene>('TITLE');
@@ -25,6 +25,7 @@ export default function App() {
   const [isGameplayModalOpen, setIsGameplayModalOpen] = useState(false);
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [soundFXMode, setSoundFXMode] = useState<SoundFXMode>('ALL');
 
   const [virtues, setVirtues] = useState<Record<VirtueId, VirtueState>>({
     REN: {
@@ -117,6 +118,8 @@ export default function App() {
         onOpenManual={() => setIsManualModalOpen(true)}
         isMuted={isMuted}
         onToggleMute={handleToggleMute}
+        soundFXMode={soundFXMode}
+        onSelectSoundMode={setSoundFXMode}
       />
 
       {/* Main Game Stage Container (800x600 responsive aspect ratio) */}

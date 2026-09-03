@@ -4,6 +4,9 @@ import { sound } from '../audio';
 import { getPlaceholderImage } from '../assets/placeholderGenerator';
 import { X, BookOpen, Bookmark, Award, Feather, Lock, Play, Sparkles } from 'lucide-react';
 import { VideoModal } from './VideoModal';
+import { BronzeCornerPlaque } from './BronzeCornerPlaque';
+import { BronzeFiligreeButton } from './BronzeFiligreeButton';
+import scrollTextureImg from '../assets/images/scroll_texture_pattern_1788339940791.jpg';
 
 interface JianghuManualModalProps {
   isOpen: boolean;
@@ -213,8 +216,8 @@ export const JianghuManualModal: React.FC<JianghuManualModalProps> = ({
         />
       )}
 
-      <div
-        className="relative w-full max-w-3xl bg-[#0e1512] border border-[#3b554b] rounded-sm shadow-[0_0_60px_rgba(0,0,0,0.98)] p-3.5 sm:p-5 flex flex-col justify-between max-h-[94vh] bg-cover bg-center overflow-hidden"
+      <BronzeCornerPlaque
+        className="relative w-full max-w-3xl bg-[#0e1512] rounded-sm shadow-[0_0_60px_rgba(0,0,0,0.98)] p-3.5 sm:p-5 flex flex-col justify-between max-h-[94vh] bg-cover bg-center overflow-hidden"
         style={{
           backgroundImage: `url(${getPlaceholderImage(
             'manual_bg',
@@ -226,13 +229,6 @@ export const JianghuManualModal: React.FC<JianghuManualModalProps> = ({
       >
         {/* Background Dark Overlay for Readability */}
         <div className="absolute inset-0 bg-[#0a0f0d]/92 backdrop-blur-[2px] pointer-events-none z-0" />
-        
-        {/* Bronze Inset Border & Corner Rivets */}
-        <div className="absolute inset-1.5 border border-[#dfba73]/20 pointer-events-none z-0" />
-        <div className="absolute top-1.5 left-1.5 w-2 h-2 border-t border-l border-[#dfba73]" />
-        <div className="absolute top-1.5 right-1.5 w-2 h-2 border-t border-r border-[#dfba73]" />
-        <div className="absolute bottom-1.5 left-1.5 w-2 h-2 border-b border-l border-[#dfba73]" />
-        <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-b border-r border-[#dfba73]" />
 
         {/* Top Bar with Title & Close */}
         <div className="relative z-10 flex items-center justify-between border-b border-[#2b3e36] pb-2 mb-2">
@@ -389,26 +385,67 @@ export const JianghuManualModal: React.FC<JianghuManualModalProps> = ({
               </div>
             </div>
 
-            {/* Five Virtues Seals Grid */}
+            {/* Five Virtues Seals Grid with Antique Scroll Texture & Tactile Hover Animation */}
             <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
               {(Object.values(virtues) as VirtueState[]).map(v => (
                 <div
                   key={v.id}
-                  className={`p-2 rounded-sm border flex flex-col items-center justify-center text-center transition-all ${
+                  onClick={() => {
+                    if (v.unlocked) {
+                      sound.playGuqinStrum();
+                    } else {
+                      sound.playMetalClashSoft();
+                    }
+                    setSelectedBookmarkVirtue(v.id);
+                    setActiveTab('BOOKMARK');
+                  }}
+                  className={`relative p-2 rounded-sm border flex flex-col items-center justify-center text-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 cursor-pointer overflow-hidden group ${
                     v.unlocked
-                      ? 'bg-[#16221e] border-[#c5a059] shadow-[0_0_10px_rgba(197,160,89,0.2)]'
-                      : 'bg-[#0e1512] border-[#2b3e36] opacity-60'
+                      ? 'bg-[#182621] border-[#c5a059] shadow-[0_4px_16px_rgba(197,160,89,0.35)] ring-1 ring-[#ffd885]/40'
+                      : 'bg-[#0e1512] border-[#2b3e36] opacity-70 hover:opacity-100 hover:border-[#3b554b]'
                   }`}
+                  style={{
+                    backgroundImage: `url(${scrollTextureImg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundBlendMode: v.unlocked ? 'luminosity' : 'multiply',
+                  }}
                 >
-                  <span className="text-lg sm:text-xl font-serif font-bold" style={{ color: v.unlocked ? '#ffd885' : '#4e6b5f' }}>
-                    {v.name}
-                  </span>
-                  <span className="text-[10px] font-serif text-[#c7beaf] mt-0.5 line-clamp-1">
+                  {/* Subtle Antique Parchment & Ink Tone Overlay */}
+                  <div className={`absolute inset-0 transition-opacity pointer-events-none ${
+                    v.unlocked
+                      ? 'bg-[#14231e]/75 group-hover:bg-[#14231e]/60'
+                      : 'bg-[#090e0c]/90 group-hover:bg-[#090e0c]/80'
+                  }`} />
+
+                  {/* Golden Inset Border Line */}
+                  <div className={`absolute inset-1 border rounded-sm pointer-events-none transition-colors ${
+                    v.unlocked ? 'border-[#ffd885]/30 group-hover:border-[#ffd885]/60' : 'border-[#2b3e36]/40'
+                  }`} />
+
+                  {/* Virtue Name Stamp Icon */}
+                  <div className="relative z-10">
+                    <span
+                      className={`text-lg sm:text-2xl font-serif font-bold transition-all drop-shadow-md inline-block ${
+                        v.unlocked
+                          ? 'text-[#ffd885] group-hover:scale-110'
+                          : 'text-[#5a7a6e]'
+                      }`}
+                    >
+                      {v.name}
+                    </span>
+                  </div>
+
+                  <span className="relative z-10 text-[10px] font-serif text-[#e5ded0] mt-0.5 line-clamp-1 font-medium drop-shadow-sm">
                     {v.title}
                   </span>
-                  <span className="text-[9px] font-mono mt-0.5" style={{ color: v.unlocked ? '#5cb87a' : '#6d8a7e' }}>
-                    {v.unlocked ? '● 已圆满' : '○ 待点亮'}
-                  </span>
+
+                  <div className="relative z-10 flex items-center gap-1 mt-0.5">
+                    <span className="text-[9px] font-mono tracking-tight" style={{ color: v.unlocked ? '#5cb87a' : '#7a968a' }}>
+                      {v.unlocked ? '● 已点亮' : '○ 待悟'}
+                    </span>
+                    {v.unlocked && <Sparkles className="w-2.5 h-2.5 text-[#ffd885] animate-pulse" />}
+                  </div>
                 </div>
               ))}
             </div>
@@ -653,19 +690,20 @@ export const JianghuManualModal: React.FC<JianghuManualModalProps> = ({
         )}
 
         {/* Footer Confirm */}
-        <div className="relative z-10 text-center pt-2.5 border-t border-[#2b3e36] mt-2">
-          <button
+        <div className="relative z-10 text-center pt-2.5 border-t border-[#2b3e36] mt-2 flex justify-center">
+          <BronzeFiligreeButton
             id="manual-modal-confirm"
             onClick={() => {
               sound.playClick();
               onClose();
             }}
-            className="px-6 py-1.5 rounded-sm bg-gradient-to-r from-[#20312a] via-[#334c41] to-[#20312a] border border-[#c5a059] text-[#ffd885] hover:text-[#fff] transition-all text-xs sm:text-sm font-serif shadow-md cursor-pointer active:scale-95"
+            variant="gold"
+            size="md"
           >
             合上卷轴 · 继续问剑
-          </button>
+          </BronzeFiligreeButton>
         </div>
-      </div>
+      </BronzeCornerPlaque>
     </div>
   );
 };

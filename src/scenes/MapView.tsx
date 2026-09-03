@@ -2,6 +2,15 @@ import React from 'react';
 import { VirtueState, GameScene, VirtueId } from '../types';
 import { sound } from '../audio';
 import { Sparkles, CheckCircle2, Lock, Flame, Home } from 'lucide-react';
+import { getPlaceholderImage } from '../assets/placeholderGenerator';
+import { BronzeFiligreeButton } from '../components/BronzeFiligreeButton';
+import { BlackGoldTag, BlackGoldPlaque, BlackGoldButton } from '../components/BlackGoldBorder';
+
+/* =========================================================================
+ * 🗺️【九州五德大地图背景底图配置位置】
+ * 如需更换大地图底图，可直接在此处修改引入的图片文件路径或变量：
+ * ========================================================================= */
+import mapScrollBgImage from '../assets/images/map_scroll_bg_hd_1788277069306.jpg';
 
 interface MapViewProps {
   virtues: Record<VirtueId, VirtueState>;
@@ -19,9 +28,8 @@ interface SteleLocation {
   subtitle: string;
   poem: string;
   color: string;
-  // Position percentage across scroll (Ordered strictly right-to-left: 仁 -> 礼 -> 义 -> 智 -> 信)
-  posX: string; // Left percentage
-  posY: string; // Top percentage
+  posX: string;
+  posY: string;
 }
 
 export const MapView: React.FC<MapViewProps> = ({
@@ -52,7 +60,7 @@ export const MapView: React.FC<MapViewProps> = ({
       landscapeTag: '曲阜 · 古柏观',
       subtitle: '剑问圣人',
       poem: '收锋守礼，敬意归心',
-      color: '#d64d3e',
+      color: '#dfba73',
       posX: '68%',
       posY: '38%',
     },
@@ -64,7 +72,7 @@ export const MapView: React.FC<MapViewProps> = ({
       landscapeTag: '吴都 · 繁华市',
       subtitle: '烈风之断',
       poem: '当为则为，仗剑卫道',
-      color: '#dfba73',
+      color: '#e06c53',
       posX: '50%',
       posY: '60%',
     },
@@ -97,29 +105,28 @@ export const MapView: React.FC<MapViewProps> = ({
   const unlockedCount = (Object.values(virtues) as VirtueState[]).filter(v => v.unlocked).length;
   const isAllUnlocked = unlockedCount >= 5;
 
+  const mapBgUrl = mapScrollBgImage || getPlaceholderImage('map_scroll_bg', '九州五德大地图', '剑由铁铸 · 心由德成');
+
   return (
-    <div className="relative w-full h-full flex flex-col justify-between select-none overflow-hidden bg-[#0c1411]">
-      {/* Background Bronze Cloud-Thunder & Patina Realm Grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#16231e_0%,#0c1411_65%,#070d0b_100%)] pointer-events-none" />
+    <div
+      className="relative w-full h-full flex flex-col justify-between select-none overflow-hidden bg-cover bg-center bg-[#0c1411]"
+      style={{ backgroundImage: `url(${mapBgUrl})` }}
+    >
+      {/* 45% 遮罩层 (用户明确要求：将九州五德大地图的背景地图遮罩效果改为45%) */}
+      <div className="absolute inset-0 bg-[#0c1411]/45 pointer-events-none" />
       
-      {/* Gold & Bronze Meander Watermark Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(59,85,75,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,85,75,0.08)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
+      {/* 柔和暗角微光 (纯净过渡) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(7,13,11,0.6)_100%)] pointer-events-none" />
       
-      {/* Patina & Bronze Stele Inset Borders */}
-      <div className="absolute inset-2 border border-[#3b554b]/50 rounded-sm pointer-events-none" />
-      <div className="absolute inset-3 border border-[#dfba73]/20 rounded-sm pointer-events-none" />
-      
-      {/* Bronze Corner Rivets */}
-      <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-[#dfba73] pointer-events-none z-30" />
-      <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-[#dfba73] pointer-events-none z-30" />
-      <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-2 border-l-2 border-[#dfba73] pointer-events-none z-30" />
-      <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-2 border-r-2 border-[#dfba73] pointer-events-none z-30" />
+      {/* 4-side clean black outer frame */}
+      <div className="absolute inset-2 border-2 border-black rounded-none pointer-events-none z-30" />
+      <div className="absolute inset-[11px] border border-black/70 rounded-none pointer-events-none z-30" />
 
       {/* Top Header: Inscribed Bronze Stele Title (九州五德大地图) */}
       <header className="relative z-20 w-full pt-3.5 px-4 sm:px-8 flex items-start justify-between">
         {/* Left Bronze Seal */}
         <div className="hidden sm:flex items-center gap-2">
-          <div className="w-7 h-7 rounded-sm bg-[#1e2e27] border border-[#dfba73] shadow-md flex items-center justify-center text-[#ffd885] text-xs font-serif font-bold">
+          <div className="w-7 h-7 rounded-none border border-black bg-[#1e2e27] shadow-md flex items-center justify-center text-[#ffd885] text-xs font-serif font-bold">
             干
           </div>
           <div className="text-[11px] font-serif text-[#7bb39d] tracking-widest leading-tight">
@@ -128,33 +135,34 @@ export const MapView: React.FC<MapViewProps> = ({
           </div>
         </div>
 
-        {/* Center: Main Stele Inscription Title */}
+        {/* Center: Main Title */}
         <div className="text-center mx-auto">
           <h1 className="font-serif font-bold text-2xl sm:text-4xl md:text-5xl text-[#f5efe3] tracking-[0.25em] drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] flex items-center justify-center gap-2">
             <span className="text-[#dfba73] text-lg sm:text-2xl">❖</span>
             <span>九 州 五 德 大 地 图</span>
             <span className="text-[#dfba73] text-lg sm:text-2xl">❖</span>
           </h1>
-          <p className="text-xs sm:text-sm font-serif text-[#a8b8b0] tracking-[0.2em] mt-1 font-medium">
+          <p className="text-xs sm:text-sm font-serif text-[#ffd885] tracking-[0.2em] mt-1 font-medium">
             【 遍历江湖五境 · 从右往左叩问五德试炼 】
           </p>
         </div>
 
-        {/* Right Seal & Progress Badge */}
+        {/* Right Seal & Progress Badge (Top/bottom black-gold lines) */}
         <div className="flex items-center gap-2">
-          <div className="px-3 py-1 rounded-sm bg-[#16221e]/90 border border-[#3b554b] text-[#ffd885] text-xs font-serif shadow-md backdrop-blur-sm flex items-center gap-1.5">
+          <BlackGoldTag>
             <Sparkles className="w-3.5 h-3.5 text-[#ffd885]" />
             <span>已悟: </span>
             <span className="font-bold text-[#fff]">{unlockedCount}</span>
             <span className="text-[#7bb39d]">/ 5 德</span>
-          </div>
+          </BlackGoldTag>
         </div>
+
       </header>
 
       {/* Main Interactive Map Area (Right-to-Left Ordered Inscribed Bronze Steles) */}
       <div className="relative z-10 w-full h-[390px] sm:h-[450px] md:h-[490px] my-auto">
         
-        {/* Subtle Bronze Constellation Trace Lines connecting right to left */}
+        {/* Constellation Trace Lines connecting right to left */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40">
           <path
             d="M 84% 55% L 68% 38% L 50% 60% L 34% 36% L 18% 58% L 7% 28%"
@@ -180,46 +188,33 @@ export const MapView: React.FC<MapViewProps> = ({
               isAllUnlocked ? 'scale-105 animate-pulse' : 'hover:scale-105'
             }`}
           >
-            {/* Bronze Ding Stele Tag for Final Chapter */}
             <div className="flex flex-col items-center">
-              {/* Bronze Top Clasp */}
-              <div className="w-14 sm:w-16 h-2 rounded-sm bg-[#20312a] border border-[#dfba73] shadow-md flex items-center justify-between px-1">
-                <div className="w-1 h-1 rounded-full bg-[#dfba73]" />
-                <div className="w-1 h-1 rounded-full bg-[#dfba73]" />
+              <div className="w-0.5 h-3 bg-[#c59b58] relative">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full border border-black bg-[#1a120b]" />
               </div>
 
-              {/* Stele Plaque Body */}
-              <div className="w-11 sm:w-13 py-2 px-1 bg-[#16221e]/95 border-x border-[#c5a059] shadow-[0_4px_20px_rgba(0,0,0,0.8)] backdrop-blur-sm flex flex-col items-center justify-center transition-all group-hover:border-[#ffd885] group-hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]">
-                {/* Decorative Seal on Top */}
-                <div className="w-4 h-4 mb-1 rounded-sm bg-[#b83a2d] flex items-center justify-center text-[#fff] text-[9px] font-bold shadow-sm">
+              {/* Plaque Body with 4-side Black Border */}
+              <div className="relative w-12 sm:w-14 py-2.5 px-1 bg-gradient-to-b from-[#382618] via-[#24180f] to-[#1a110a] border-2 border-black rounded-none shadow-[0_6px_20px_rgba(0,0,0,0.85)] flex flex-col items-center justify-center transition-all group-hover:border-[#dfba73] group-hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]">
+                <div className="w-4 h-4 mb-1 rounded-none bg-[#9e2a20] border border-black flex items-center justify-center text-[#fff] text-[9px] font-serif font-bold shadow-sm">
                   终
                 </div>
 
-                {/* Vertical Bronze Inscription */}
-                <div className="font-serif font-bold text-[#f5efe3] text-sm sm:text-base tracking-[0.25em] leading-snug [writing-mode:vertical-rl] group-hover:text-[#ffd885]">
+                <div className="font-serif font-bold text-[#f5efe3] text-sm sm:text-base tracking-[0.2em] leading-snug [writing-mode:vertical-rl] group-hover:text-[#ffd885]">
                   天地铸炉
                 </div>
 
-                {/* Bottom Bronze Rivet */}
-                <div className="w-1.5 h-1.5 rounded-full bg-[#dfba73] mt-1.5 shadow-sm" />
-              </div>
-
-              {/* Bottom Bronze Clasp */}
-              <div className="w-14 sm:w-16 h-2 rounded-sm bg-[#20312a] border border-[#dfba73] shadow-md flex items-center justify-between px-1">
-                <div className="w-1 h-1 rounded-full bg-[#dfba73]" />
-                <div className="w-1 h-1 rounded-full bg-[#dfba73]" />
+                <div className="w-6 h-[1px] bg-[#c59b58]/50 mt-1.5" />
               </div>
             </div>
 
-            {/* Hover Tooltip / Status Bubble */}
-            <div className="mt-1 px-2 py-0.5 rounded-sm bg-[#16221e] border border-[#dfba73] text-[10px] font-serif text-[#ffd885] whitespace-nowrap shadow-lg flex items-center gap-1">
+            <div className="mt-1 px-2 py-0.5 rounded-none border border-black bg-[#16221e] text-[10px] font-serif text-[#ffd885] whitespace-nowrap shadow-lg flex items-center gap-1">
               <Flame className="w-3 h-3 text-[#ff7b00]" />
               <span>{isAllUnlocked ? '【五德圆满·终局】' : '【终章绘卷】'}</span>
             </div>
           </button>
         </div>
 
-        {/* Render the 5 Inscribed Bronze Steles from Right to Left: 仁 -> 礼 -> 义 -> 智 -> 信 */}
+        {/* Render the 5 Inscribed Warring States Tokens from Right to Left: 仁 -> 礼 -> 义 -> 智 -> 信 */}
         {locations.map((loc) => {
           const isUnlocked = virtues[loc.id]?.unlocked;
 
@@ -237,68 +232,47 @@ export const MapView: React.FC<MapViewProps> = ({
                 }}
                 className="group relative flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
               >
-                {/* Warring States Bronze Inscribed Stele */}
                 <div className="flex flex-col items-center">
-                  {/* Top Bronze Bar / Fitting */}
-                  <div className={`w-12 sm:w-14 h-1.5 sm:h-2 rounded-sm border shadow-md flex items-center justify-between px-1 transition-colors ${
-                    isUnlocked
-                      ? 'bg-[#20312a] border-[#dfba73]'
-                      : 'bg-[#16221e] border-[#2b3e36]'
-                  }`}>
-                    <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-[#dfba73]" />
-                    <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-[#dfba73]" />
+                  <div className={`w-[1.5px] h-3 relative ${isUnlocked ? 'bg-[#c59b58]' : 'bg-[#7a6850]'}`}>
+                    <div className={`absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full border border-black ${
+                      isUnlocked ? 'bg-[#1a120b]' : 'bg-[#121c17]'
+                    }`} />
                   </div>
 
-                  {/* Stele Bronze Surface */}
+                  {/* Plaque Body with 4-side clean black border */}
                   <div
-                    className={`w-9 sm:w-11 py-2 sm:py-2.5 px-0.5 border-x shadow-[0_4px_16px_rgba(0,0,0,0.7)] flex flex-col items-center justify-center transition-all ${
+                    className={`relative w-10 sm:w-12 py-2 sm:py-2.5 px-1 border-2 border-black rounded-none shadow-[0_4px_16px_rgba(0,0,0,0.75)] flex flex-col items-center justify-center transition-all ${
                       isUnlocked
-                        ? 'bg-[#16221e] border-[#c5a059] group-hover:border-[#ffd885] group-hover:shadow-[0_0_18px_rgba(197,160,89,0.5)]'
-                        : 'bg-[#111916] border-[#2b3e36] opacity-95 group-hover:opacity-100 group-hover:bg-[#16221e] group-hover:border-[#3b554b]'
+                        ? 'bg-gradient-to-b from-[#342417] via-[#241910] to-[#18100a] group-hover:border-[#dfba73] group-hover:shadow-[0_0_18px_rgba(223,186,115,0.45)]'
+                        : 'bg-gradient-to-b from-[#221811] via-[#1a120d] to-[#120d09] opacity-90 group-hover:opacity-100 group-hover:border-[#967755]'
                     }`}
                   >
-                    {/* Virtue Initial Stamp on Top */}
+                    {/* Virtue Character Stamp (参考图1战国金文古印) */}
                     <div
-                      className="w-4 h-4 mb-1 rounded-sm flex items-center justify-center text-[9px] sm:text-[10px] font-serif font-bold shadow-sm"
+                      className="w-5 h-5 mb-1 rounded-none border border-black flex items-center justify-center text-xs font-serif font-black shadow-sm"
                       style={{
-                        backgroundColor: isUnlocked ? '#20312a' : '#141d19',
-                        color: isUnlocked ? '#ffd885' : '#7bb39d',
-                        border: isUnlocked ? '1px solid #dfba73' : '1px solid #2b3e36',
+                        backgroundColor: isUnlocked ? '#8f2319' : '#3d251d',
+                        color: isUnlocked ? '#ffd885' : '#bda391',
+                        textShadow: isUnlocked ? '0 1px 2px #000, 0 0 8px rgba(255,216,133,0.6)' : 'none',
                       }}
                     >
                       {loc.name}
                     </div>
 
-                    {/* Vertical Inscribed Stele Title */}
                     <div className="font-serif font-bold text-[#f5efe3] text-xs sm:text-sm tracking-[0.2em] leading-snug [writing-mode:vertical-rl] group-hover:text-[#ffd885]">
                       {loc.steleLabel}
                     </div>
 
-                    {/* Subtitle / Virtue Subtitle */}
-                    <div className="text-[8px] sm:text-[9px] font-serif text-[#7bb39d] mt-1 scale-90 tracking-tighter [writing-mode:vertical-rl]">
+                    <div className="text-[8px] sm:text-[9px] font-serif text-[#c2ad97] mt-1 scale-90 tracking-tighter [writing-mode:vertical-rl]">
                       {loc.subtitle}
                     </div>
 
-                    {/* Bottom Bronze Rivet */}
-                    <div
-                      className="w-1.5 h-1.5 rounded-full mt-1.5 shadow-sm"
-                      style={{ backgroundColor: isUnlocked ? '#dfba73' : '#3b554b' }}
-                    />
-                  </div>
-
-                  {/* Bottom Bronze Bar / Fitting */}
-                  <div className={`w-12 sm:w-14 h-1.5 sm:h-2 rounded-sm border shadow-md flex items-center justify-between px-1 transition-colors ${
-                    isUnlocked
-                      ? 'bg-[#20312a] border-[#dfba73]'
-                      : 'bg-[#16221e] border-[#2b3e36]'
-                  }`}>
-                    <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-[#dfba73]" />
-                    <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-[#dfba73]" />
+                    <div className={`w-5 h-[1px] mt-1.5 ${isUnlocked ? 'bg-[#c59b58]/60' : 'bg-[#6b553e]/40'}`} />
                   </div>
                 </div>
 
-                {/* State Tag Pill Floating Below */}
-                <div className="mt-1 px-2 py-0.5 rounded-sm bg-[#16221e] border border-[#3b554b] text-[10px] font-serif text-[#f5efe3] whitespace-nowrap shadow-md flex items-center gap-1 group-hover:border-[#dfba73]">
+                {/* State Tag Pill (Top/bottom centered black-gold filigree, no side borders) */}
+                <BlackGoldTag className="mt-1 px-2 py-0.5 text-[10px] text-[#f5efe3] whitespace-nowrap shadow-md flex items-center gap-1 group-hover:text-[#ffd885]">
                   {isUnlocked ? (
                     <>
                       <CheckCircle2 className="w-2.5 h-2.5 text-[#5cb87a]" />
@@ -310,32 +284,32 @@ export const MapView: React.FC<MapViewProps> = ({
                       <span className="text-[#a8b8b0]">问剑入局</span>
                     </>
                   )}
-                </div>
+                </BlackGoldTag>
+
               </button>
             </div>
           );
         })}
       </div>
 
-      {/* Bottom Footer: Classical Bronze Progress & Return to Home Button */}
+      {/* Bottom Footer: Progress & Return to Home Button (Top/bottom black-gold lines, no side borders) */}
       <footer className="relative z-20 w-full pb-3 px-4 sm:px-8 flex flex-col items-center">
-        {/* Progress Bar Container in Warring States Bronze Style */}
-        <div className="w-full max-w-lg bg-[#16221e]/95 border border-[#3b554b] rounded-sm p-2.5 shadow-2xl backdrop-blur-md">
+        <BlackGoldPlaque className="w-full max-w-lg bg-[#16221e]/95 p-3 shadow-2xl backdrop-blur-md">
           <div className="flex items-center justify-between text-xs font-serif text-[#f5efe3] mb-1.5">
             <span className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-[#dfba73] inline-block" />
+              <span className="w-2 h-2 rounded-none bg-[#dfba73] border border-black inline-block" />
               <span className="text-[#a8b8b0]">五德参悟进度:</span>
               <strong className="text-[#ffd885] ml-1">{unlockedCount} / 5</strong>
             </span>
-            <span className="text-[#7bb39d] text-[11px]">
-              {isAllUnlocked ? '【五德归一 · 炉火纯青】' : '【点选铭碑 · 寻访问道】'}
+            <span className="text-[#ffd885] text-[11px] font-bold">
+              {isAllUnlocked ? '【五德归一 · 炉火纯青】' : '【点选吊牌 · 寻访问道】'}
             </span>
           </div>
 
           {/* Golden Bronze Meter */}
-          <div className="w-full h-2 bg-[#0a0f0d] rounded-sm overflow-hidden border border-[#2b3e36] p-[1px]">
+          <div className="w-full h-2 bg-[#0a0f0d] rounded-none overflow-hidden border border-black p-[1px]">
             <div
-              className={`h-full rounded-sm transition-all duration-700 ${
+              className={`h-full rounded-none transition-all duration-700 ${
                 isAllUnlocked
                   ? 'bg-gradient-to-r from-[#2b5947] via-[#dfba73] to-[#fff] shadow-[0_0_10px_rgba(223,186,115,0.8)]'
                   : 'bg-gradient-to-r from-[#20312a] via-[#3b554b] to-[#dfba73]'
@@ -343,20 +317,23 @@ export const MapView: React.FC<MapViewProps> = ({
               style={{ width: `${(unlockedCount / 5) * 100}%` }}
             />
           </div>
-        </div>
+        </BlackGoldPlaque>
+
 
         <div className="flex items-center justify-between w-full max-w-lg mt-2 text-[11px] font-serif text-[#7bb39d]">
           {onBackToTitle && (
-            <button
+            <BlackGoldButton
+              id="map-btn-back-home"
               onClick={() => {
                 sound.playClick();
                 onBackToTitle();
               }}
-              className="flex items-center gap-1 px-2.5 py-0.5 rounded-sm bg-[#16221e] border border-[#3b554b] hover:border-[#dfba73] text-[#ffd885] hover:text-[#fff] transition-all cursor-pointer text-xs"
+              variant="dark"
+              size="sm"
             >
-              <Home className="w-3 h-3 text-[#ffd885]" />
+              <Home className="w-3.5 h-3.5 text-[#7bf0b5]" />
               <span>返回首页</span>
-            </button>
+            </BlackGoldButton>
           )}
           <span className="mx-auto tracking-wider font-medium text-[#7bb39d]">
             ❖ 九州大地因缘际会 · 剑由铁铸 · 心由德成 ❖

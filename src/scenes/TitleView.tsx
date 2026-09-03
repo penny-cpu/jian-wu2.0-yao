@@ -3,6 +3,12 @@ import { sound } from '../audio';
 import { getPlaceholderImage } from '../assets/placeholderGenerator';
 import { User, BookOpen, Award, Swords, Scroll } from 'lucide-react';
 
+/* =========================================================================
+ * 📌【首页“五德剑道”底图配置位置】
+ * 如需更换首页背景图，可直接在此处修改引入的图片文件路径或变量：
+ * ========================================================================= */
+import homeIntroBgImage from '../assets/images/intro_bg_1788276445051.jpg';
+
 interface TitleViewProps {
   onStartGame: () => void;
   onOpenCharacter: () => void;
@@ -18,13 +24,17 @@ export const TitleView: React.FC<TitleViewProps> = ({
   onOpenGameplay,
   onOpenManual,
 }) => {
-  const bgUrl = getPlaceholderImage('intro_bg', '五德融剑 · 刚柔舞韵', '剑由铁铸 · 心由德成', '#D4AF37');
+  // 首页底图路径 (优先使用配置的底图，或降级至通用占位生成器)
+  const bgUrl = homeIntroBgImage || getPlaceholderImage('intro_bg', '五德融剑 · 刚柔舞韵', '剑由铁铸 · 心由德成', '#D4AF37');
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-between p-5 sm:p-8 select-none overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${bgUrl})` }}>
-      {/* Dark Ambient Overlay with Bronze & Verdigris Patina Texture */}
-      <div className="absolute inset-0 bg-[#0a0f0d]/90 backdrop-blur-[2px]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(25,37,32,0.6)_0%,rgba(9,13,11,0.96)_100%)] pointer-events-none" />
+    <div
+      className="relative w-full h-full flex flex-col items-center justify-between p-5 sm:p-8 select-none overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: `url(${bgUrl})` }}
+    >
+      {/* 遮罩层：遮罩感 50% (精确 50% 半透明暗调遮罩，兼顾底图古战场恢宏意境与前景文字清晰度) */}
+      <div className="absolute inset-0 bg-[#0a0f0d]/50 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,30,25,0.2)_0%,rgba(9,13,11,0.65)_100%)] pointer-events-none" />
       
       {/* Subtle Ancient Geometric Bronze Grid Lines */}
       <div className="absolute inset-4 border border-[#2b3e36]/40 pointer-events-none" />
@@ -122,7 +132,7 @@ export const TitleView: React.FC<TitleViewProps> = ({
         </div>
       </div>
 
-      {/* Bottom Start Button & Placement of Journey Intro Text */}
+      {/* Bottom Start Button */}
       <div className="relative z-10 text-center pb-4 sm:pb-6 flex flex-col items-center">
         <button
           id="title-btn-start"
@@ -132,16 +142,14 @@ export const TitleView: React.FC<TitleViewProps> = ({
               onStartGame();
             }, 350);
           }}
-          className="group relative inline-flex items-center justify-center px-8 py-3.5 sm:px-14 sm:py-4 rounded-sm bg-gradient-to-r from-[#20312a] via-[#334c41] to-[#20312a] border-2 border-[#c5a059] text-[#ffd885] hover:text-white font-serif text-lg sm:text-xl font-bold tracking-widest shadow-[0_0_30px_rgba(197,160,89,0.35)] hover:shadow-[0_0_45px_rgba(197,160,89,0.7)] hover:border-[#fff] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+          className="group relative inline-flex items-center justify-center px-10 py-3.5 sm:px-14 sm:py-4 rounded-sm bg-gradient-to-r from-[#1c2a23] via-[#2f473c] to-[#1c2a23] border-2 border-[#dfba73] hover:border-[#fff] text-[#ffd885] hover:text-white font-serif text-lg sm:text-2xl font-bold tracking-[0.25em] shadow-[0_0_30px_rgba(223,186,115,0.4)] hover:shadow-[0_0_50px_rgba(223,186,115,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
         >
-          <span className="text-[#c5a059] group-hover:text-white mr-2">◇</span>
-          <Swords className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-[#ffd885] group-hover:rotate-12 transition-transform duration-300" />
-          <span>拔 剑 出 鞘 · 踏 入 江 湖</span>
-          <Swords className="w-5 h-5 sm:w-6 sm:h-6 ml-2 text-[#ffd885] group-hover:-rotate-12 transition-transform duration-300" />
-          <span className="text-[#c5a059] group-hover:text-white ml-2">◇</span>
+          <Swords className="w-6 h-6 mr-3 text-[#ffd885] group-hover:rotate-45 transition-transform" />
+          <span>拔剑出鞘 · 踏入江湖</span>
+          <Swords className="w-6 h-6 ml-3 text-[#ffd885] group-hover:-rotate-45 transition-transform" />
         </button>
 
-        <p className="text-xs sm:text-sm font-serif text-[#a8b8b0] mt-3 tracking-wider leading-relaxed max-w-xl text-center">
+        <p className="text-xs sm:text-sm font-serif text-[#a8b8b0] mt-3 tracking-wider leading-relaxed max-w-xl text-center font-medium">
           跟随春秋铸剑师干将，历经仁、礼、义、智、信五重江湖问剑试炼
         </p>
       </div>

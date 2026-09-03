@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { sound } from '../audio';
 import { Compass, ChevronLeft, ChevronRight } from 'lucide-react';
+import { getPlaceholderImage } from '../assets/placeholderGenerator';
+
+/* =========================================================================
+ * 📜【故事背景（两页简介）背景底图配置位置】
+ * 如需更换故事背景两页底图，可直接在此处修改引入的图片文件路径或变量：
+ * ========================================================================= */
+import storyPrologueBgImage from '../assets/images/bronze_scroll_bg_1788276709995.jpg';
 
 interface StoryPrologueViewProps {
   onStartJourney: () => void;
@@ -336,19 +343,23 @@ export const StoryPrologueView: React.FC<StoryPrologueViewProps> = ({
     }
   };
 
+  // 故事背景底图路径 (优先使用配置的底图，或降级至通用占位生成器)
+  const bgUrl = storyPrologueBgImage || getPlaceholderImage('story_prologue_bg', '故事简介', '干将问剑');
+
   return (
     <div
-      className="relative w-full h-full flex flex-col justify-between items-center p-4 sm:p-6 md:p-8 select-none overflow-y-auto overflow-x-hidden bg-[#070c0a] cursor-pointer"
+      className="relative w-full h-full flex flex-col justify-between items-center p-4 sm:p-6 md:p-8 select-none overflow-y-auto overflow-x-hidden bg-[#070c0a] cursor-pointer bg-cover bg-center"
+      style={{ backgroundImage: `url(${bgUrl})` }}
       onClick={handleFastForward}
       title={revealedLines < maxLines ? "点击可立即显示本页全文" : ""}
     >
-      {/* 1. Background Atmosphere: 无文字框纯净空间 + 剑影穿梭反光动画 + 战国金石墨韵背景 */}
+      {/* 1. Background Atmosphere & 75% 遮罩层 (遮罩感 75%：暗调遮罩 75% 结合径向暗角，古卷铜剑意境隐现且文字阅读舒适) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Deep Ink & Bronze Gradient Canvas */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#08100d] via-[#0e1714] to-[#060b09]" />
+        {/* 75% 暗调遮罩 */}
+        <div className="absolute inset-0 bg-[#070c0a]/75" />
 
-        {/* Ambient Dark Green Inscription Fog & Vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(25,38,32,0.45)_0%,rgba(6,11,9,0.94)_85%)]" />
+        {/* 柔和暗绿青铜暗角 */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(25,38,32,0.35)_0%,rgba(6,11,9,0.85)_85%)]" />
 
         {/* Dynamic Shuttling Swords, Blade Reflections & Light Shimmers Effect (刀剑来回穿梭反光的影子动画) */}
         <ShuttlingSwordShadowEffect />
@@ -567,7 +578,7 @@ export const StoryPrologueView: React.FC<StoryPrologueViewProps> = ({
               e.stopPropagation();
               handlePrevPage();
             }}
-            className="flex items-center gap-1.5 px-4 sm:px-6 py-2 rounded-sm bg-[#16221e]/90 border border-[#3b554b] text-xs sm:text-sm font-serif text-[#ffd885] hover:border-[#dfba73] hover:text-white transition-all cursor-pointer shadow-md active:scale-95"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-sm bg-[#16221e]/90 hover:bg-[#20312a] border border-[#3b554b] hover:border-[#dfba73] text-xs sm:text-sm font-serif text-[#ffd885] transition-all cursor-pointer shadow-md active:scale-95"
           >
             <ChevronLeft className="w-4 h-4 text-[#ffd885]" />
             <span>上一页 · 剑心破碎</span>
@@ -587,10 +598,10 @@ export const StoryPrologueView: React.FC<StoryPrologueViewProps> = ({
               e.stopPropagation();
               handleNextPage();
             }}
-            className="group inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 rounded-sm bg-gradient-to-r from-[#1b2b25] via-[#2a4037] to-[#1b2b25] border border-[#dfba73] text-[#ffd885] hover:text-white font-serif font-bold text-xs sm:text-sm transition-all shadow-[0_0_20px_rgba(223,186,115,0.3)] hover:border-[#fff] hover:scale-105 active:scale-95 cursor-pointer"
+            className="flex items-center gap-1.5 px-5 py-2 rounded-sm bg-[#1b2b25] hover:bg-[#253d34] border border-[#dfba73] hover:border-[#ffd885] text-xs sm:text-sm font-serif font-bold text-[#ffd885] hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(223,186,115,0.25)] active:scale-95"
           >
             <span>翻阅下卷 · 启程问剑</span>
-            <ChevronRight className="w-4 h-4 text-[#ffd885] group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-4 h-4 text-[#ffd885]" />
           </button>
         ) : (
           <button
@@ -600,10 +611,10 @@ export const StoryPrologueView: React.FC<StoryPrologueViewProps> = ({
               sound.playVirtueChime();
               onStartJourney();
             }}
-            className="group relative inline-flex items-center gap-2 px-6 sm:px-10 py-2.5 sm:py-3 rounded-sm bg-gradient-to-r from-[#1c2923] via-[#2d4238] to-[#1c2923] border-2 border-[#c5a059] text-[#ffd885] hover:text-white font-serif font-bold text-xs sm:text-base transition-all shadow-[0_0_25px_rgba(197,160,89,0.35)] hover:shadow-[0_0_35px_rgba(197,160,89,0.6)] hover:border-[#fff] hover:scale-105 active:scale-95 cursor-pointer"
+            className="group inline-flex items-center gap-2 px-8 py-2.5 rounded-sm bg-gradient-to-r from-[#1c2923] via-[#2d4238] to-[#1c2923] border-2 border-[#dfba73] hover:border-white text-[#ffd885] hover:text-white font-serif font-bold text-sm sm:text-base tracking-widest transition-all shadow-[0_0_25px_rgba(223,186,115,0.4)] hover:scale-105 active:scale-95 cursor-pointer animate-pulse"
           >
-            <span className="tracking-widest">领悟剑道 · 启程问剑</span>
-            <Compass className="w-4 h-4 text-[#ffd885] group-hover:rotate-45 transition-transform" />
+            <span>领悟剑道 · 启程问剑</span>
+            <Compass className="w-5 h-5 text-[#ffd885] group-hover:rotate-45 transition-transform" />
           </button>
         )}
       </div>

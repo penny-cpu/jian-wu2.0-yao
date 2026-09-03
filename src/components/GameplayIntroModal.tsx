@@ -1,6 +1,9 @@
 import React from 'react';
 import { sound } from '../audio';
 import { X, Sparkles, CheckCircle2 } from 'lucide-react';
+import { BronzeCornerPlaque } from './BronzeCornerPlaque';
+import { BronzeFiligreeButton } from './BronzeFiligreeButton';
+import bronzeScrollBg from '../assets/images/bronze_scroll_bg_1788276709995.jpg';
 
 interface GameplayIntroModalProps {
   isOpen: boolean;
@@ -11,24 +14,34 @@ export const GameplayIntroModal: React.FC<GameplayIntroModalProps> = ({ isOpen, 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 select-none animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-[#0e1512] border border-[#3b554b] rounded-sm shadow-[0_0_60px_rgba(0,0,0,0.98)] p-5 sm:p-8 overflow-y-auto max-h-[92vh] flex flex-col justify-between">
-        {/* Bronze Metallic Inset Border & Corner Rivets */}
-        <div className="absolute inset-1.5 border border-[#dfba73]/20 pointer-events-none z-0" />
-        <div className="absolute top-1.5 left-1.5 w-2 h-2 border-t border-l border-[#dfba73]" />
-        <div className="absolute top-1.5 right-1.5 w-2 h-2 border-t border-r border-[#dfba73]" />
-        <div className="absolute bottom-1.5 left-1.5 w-2 h-2 border-b border-l border-[#dfba73]" />
-        <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-b border-r border-[#dfba73]" />
+    <div className="fixed inset-0 z-50 bg-[#060a08]/92 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 select-none animate-fade-in">
+      {/* Container with Warring States Bronze Corner Linework (图4设计) and Scroll Top/Bottom Borders (图2设计) */}
+      <BronzeCornerPlaque className="relative w-full max-w-2xl bg-[#16221e]/95 rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.98)] p-6 sm:p-8 overflow-hidden max-h-[92vh] flex flex-col justify-between">
+        {/* Background Image Layer (参考图2卷轴底图) */}
+        <div
+          className="absolute inset-0 bg-cover bg-center pointer-events-none"
+          style={{ backgroundImage: `url(${bronzeScrollBg})` }}
+        />
+        {/* 70% 遮罩层 (参考要求：遮罩70%) */}
+        <div className="absolute inset-0 bg-[#0a100d]/70 pointer-events-none" />
+
+        {/* Top Scroll Border Inscription Line (参考图2上下边框纹线设计) */}
+        <div className="absolute top-1 inset-x-8 h-[2px] bg-gradient-to-r from-transparent via-[#dfba73]/80 to-transparent pointer-events-none" />
+        <div className="absolute top-2 inset-x-12 h-[1px] bg-gradient-to-r from-transparent via-[#c5a059]/40 to-transparent pointer-events-none" />
+
+        {/* Bottom Scroll Border Inscription Line (参考图2上下边框纹线设计) */}
+        <div className="absolute bottom-2 inset-x-12 h-[1px] bg-gradient-to-r from-transparent via-[#c5a059]/40 to-transparent pointer-events-none" />
+        <div className="absolute bottom-1 inset-x-8 h-[2px] bg-gradient-to-r from-transparent via-[#dfba73]/80 to-transparent pointer-events-none" />
 
         {/* Top Header & Close Button */}
-        <div className="relative z-10 flex items-center justify-between border-b border-[#2a3e36] pb-3 mb-4">
+        <div className="relative z-10 flex items-center justify-between border-b border-[#3b554b]/70 pb-3 mb-3">
           <div className="flex items-center gap-2.5">
             <span className="text-[#ffd885] text-lg">◇</span>
             <div>
               <h2 className="text-base sm:text-lg font-serif font-bold text-[#f5efe3] tracking-widest flex items-center gap-2">
                 <span>【 以五德问剑 · 玩法介绍 】</span>
               </h2>
-              <p className="text-xs font-serif text-[#7bb39d] tracking-wider">
+              <p className="text-xs font-serif text-[#ffd885] tracking-wider font-semibold">
                 春秋铸心 · 以德驭锋 · 刚柔并济 · 剑心重铸
               </p>
             </div>
@@ -40,73 +53,75 @@ export const GameplayIntroModal: React.FC<GameplayIntroModalProps> = ({ isOpen, 
               sound.playClick();
               onClose();
             }}
-            className="p-1.5 rounded-sm bg-[#16221e] border border-[#3b554b] text-[#c7beaf] hover:text-[#ffd885] hover:border-[#dfba73] transition-colors cursor-pointer"
+            className="p-1.5 rounded-sm bg-[#111916]/90 border border-[#3b554b] text-[#7bb39d] hover:text-[#ffd885] hover:border-[#dfba73] transition-colors cursor-pointer shadow-sm"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Main Gameplay Content */}
-        <div className="relative z-10 space-y-4 my-auto py-2 text-left">
+        <div className="relative z-10 space-y-3.5 my-auto py-2 text-left">
           {/* Paragraph 1 */}
-          <div className="flex items-start gap-2.5 bg-[#131d19]/60 p-3 rounded-sm border border-[#23352e]">
-            <span className="text-[#ffd885] mt-0.5">◆</span>
-            <p className="font-serif text-xs sm:text-sm md:text-base text-[#e6dbca] leading-relaxed tracking-wide">
+          <div className="flex items-start gap-2.5 bg-[#111916]/85 backdrop-blur-sm p-3 rounded-sm border border-[#2b3e36]/80">
+            <span className="text-[#ffd885] mt-0.5 font-bold">◆</span>
+            <p className="font-serif text-xs sm:text-sm md:text-base text-[#d6e0db] leading-relaxed tracking-wide">
               跟随干将踏上问剑之旅，依次完成五关剑道试炼。
             </p>
           </div>
 
           {/* Paragraph 2 */}
-          <div className="flex items-start gap-2.5 bg-[#131d19]/60 p-3.5 rounded-sm border border-[#23352e]">
-            <span className="text-[#ffd885] mt-0.5">◆</span>
-            <p className="font-serif text-xs sm:text-sm md:text-base text-[#e6dbca] leading-relaxed tracking-wide">
-              在不同关卡中，通过<strong className="text-[#ffd885]">点击、滑动、判断与闪避</strong>等操作，完成<span className="text-[#7bb39d] font-medium">锻剑、格挡、出招、剑法选择与躲避障碍</span>等挑战。
+          <div className="flex items-start gap-2.5 bg-[#111916]/85 backdrop-blur-sm p-3.5 rounded-sm border border-[#2b3e36]/80">
+            <span className="text-[#ffd885] mt-0.5 font-bold">◆</span>
+            <p className="font-serif text-xs sm:text-sm md:text-base text-[#d6e0db] leading-relaxed tracking-wide">
+              在不同关卡中，通过<strong className="text-[#ffd885]">点击、滑动、判断与闪避</strong>等操作，完成<span className="text-[#7bb39d] font-bold">锻剑、格挡、出招、剑法选择与躲避障碍</span>等挑战。
             </p>
           </div>
 
           {/* Paragraph 3 */}
-          <div className="p-4 rounded-sm bg-[#131d19] border border-[#3b554b] space-y-3 shadow-inner">
+          <div className="p-4 rounded-sm bg-[#111916]/90 backdrop-blur-sm border border-[#dfba73]/40 space-y-3 shadow-inner">
             <div className="flex items-start gap-2.5">
-              <span className="text-[#d64d3e] mt-0.5">◆</span>
-              <p className="font-serif text-xs sm:text-sm md:text-base text-[#e6dbca] leading-relaxed tracking-wide">
+              <span className="text-[#ffd885] mt-0.5 font-bold">◆</span>
+              <p className="font-serif text-xs sm:text-sm md:text-base text-[#d6e0db] leading-relaxed tracking-wide">
                 每完成一关，即可分别点亮对应五德——
               </p>
             </div>
 
             {/* Five Virtues Badges Row */}
-            <div className="flex items-center justify-center gap-2 sm:gap-4 py-2 px-3 rounded-sm bg-[#0a0f0d] border border-[#2b3e36]">
-              <span className="font-serif text-base sm:text-lg text-[#5cb87a] font-bold px-2 py-0.5 bg-[#16241e] rounded-sm border border-[#5cb87a]/40 shadow-sm">仁</span>
-              <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#dfba73] font-bold px-2 py-0.5 bg-[#242116] rounded-sm border border-[#dfba73]/40 shadow-sm">礼</span>
-              <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#d64d3e] font-bold px-2 py-0.5 bg-[#261716] rounded-sm border border-[#d64d3e]/40 shadow-sm">义</span>
-              <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#66a3d2] font-bold px-2 py-0.5 bg-[#162026] rounded-sm border border-[#66a3d2]/40 shadow-sm">智</span>
-              <span className="text-[#4e6b5f]">·</span>
-              <span className="font-serif text-base sm:text-lg text-[#f5efe3] font-bold px-2 py-0.5 bg-[#222421] rounded-sm border border-[#f5efe3]/40 shadow-sm">信</span>
+            <div className="flex items-center justify-center gap-2 sm:gap-4 py-2 px-3 rounded-sm bg-[#0c1411]/90 border border-[#2b3e36]">
+              <span className="font-serif text-base sm:text-lg text-[#5cb87a] font-bold px-2 py-0.5 bg-[#16291e] rounded-sm border border-[#5cb87a]/60 shadow-sm">仁</span>
+              <span className="text-[#dfba73]">·</span>
+              <span className="font-serif text-base sm:text-lg text-[#dfba73] font-bold px-2 py-0.5 bg-[#2b2716] rounded-sm border border-[#dfba73]/60 shadow-sm">礼</span>
+              <span className="text-[#dfba73]">·</span>
+              <span className="font-serif text-base sm:text-lg text-[#e06666] font-bold px-2 py-0.5 bg-[#2b1716] rounded-sm border border-[#e06666]/60 shadow-sm">义</span>
+              <span className="text-[#dfba73]">·</span>
+              <span className="font-serif text-base sm:text-lg text-[#5cb8b2] font-bold px-2 py-0.5 bg-[#10272c] rounded-sm border border-[#5cb8b2]/60 shadow-sm">智</span>
+              <span className="text-[#dfba73]">·</span>
+              <span className="font-serif text-base sm:text-lg text-[#d64d3e] font-bold px-2 py-0.5 bg-[#2a120e] rounded-sm border border-[#d64d3e]/60 shadow-sm">信</span>
             </div>
 
-            <p className="font-serif text-xs sm:text-sm text-[#ffd885] leading-relaxed tracking-wide text-center font-medium pt-1">
+            <p className="font-serif text-xs sm:text-sm text-[#ffd885] leading-relaxed tracking-wide text-center font-bold pt-1">
               补全破碎的剑心，最终找到“为何持剑”的答案。
             </p>
           </div>
         </div>
 
-        {/* Footer Button */}
-        <div className="relative z-10 text-center pt-4 border-t border-[#2a3e36] mt-3">
-          <button
+        {/* Footer Button (图3居中青铜按键) */}
+        <div className="relative z-10 text-center pt-3 mt-2 flex justify-center">
+          <BronzeFiligreeButton
             id="gameplay-modal-confirm"
             onClick={() => {
               sound.playClick();
               onClose();
             }}
-            className="px-8 py-2.5 rounded-sm bg-gradient-to-r from-[#20312a] via-[#334c41] to-[#20312a] border border-[#c5a059] text-[#ffd885] hover:text-[#fff] transition-all text-xs sm:text-sm font-serif shadow-lg cursor-pointer active:scale-95 flex items-center gap-2 mx-auto"
+            variant="gold"
+            size="md"
+            leftOrnament={<Sparkles className="w-3.5 h-3.5 text-[#dfba73]" />}
+            rightOrnament={<Sparkles className="w-3.5 h-3.5 text-[#dfba73]" />}
           >
-            <CheckCircle2 className="w-4 h-4 text-[#ffd885]" />
             <span>我已明了 · 领悟剑意</span>
-          </button>
+          </BronzeFiligreeButton>
         </div>
-      </div>
+      </BronzeCornerPlaque>
     </div>
   );
 };

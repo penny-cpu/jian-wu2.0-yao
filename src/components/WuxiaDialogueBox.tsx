@@ -12,8 +12,10 @@ export interface DialogueLine {
 }
 
 interface WuxiaDialogueBoxProps {
-  dialogues: DialogueLine[];
-  currentIndex: number;
+  dialogues?: DialogueLine[];
+  currentLine?: DialogueLine;
+  currentIndex?: number;
+  totalLines?: number;
   onNext: () => void;
   onSkip?: () => void;
   headerTag?: string;
@@ -468,19 +470,28 @@ export const RuffianBust: React.FC<{ isActive: boolean; side?: 'left' | 'right' 
 
 export const WuxiaDialogueBox: React.FC<WuxiaDialogueBoxProps> = ({
   dialogues,
-  currentIndex,
+  currentLine,
+  currentIndex = 0,
+  totalLines,
   onNext,
   onSkip,
   headerTag,
 }) => {
-  const current = dialogues[currentIndex] || dialogues[0];
+  const list = dialogues || (currentLine ? [currentLine] : []);
+  const current: DialogueLine = currentLine || (list.length > currentIndex ? list[currentIndex] : list[0]) || {
+    speaker: '旁白',
+    text: '',
+  };
+
+  const total = totalLines || list.length || 1;
+  const speakerName = current.speaker || '';
 
   // Helper to determine speaker side
   let speakerSide = current.speakerSide;
   if (!speakerSide) {
-    if (current.speaker.includes('干将')) {
+    if (speakerName.includes('干将')) {
       speakerSide = 'right';
-    } else if (current.speaker.includes('旁白')) {
+    } else if (speakerName.includes('旁白')) {
       speakerSide = 'narrator';
     } else {
       speakerSide = 'left';
@@ -492,13 +503,13 @@ export const WuxiaDialogueBox: React.FC<WuxiaDialogueBoxProps> = ({
 
   // Determine which left avatar to render
   const renderLeftBust = () => {
-    if (current.speaker.includes('玉琅') || current.avatarType === 'yulang') {
+    if (speakerName.includes('玉琅') || current.avatarType === 'yulang') {
       return <YuLangBust isActive={isLeftActive} side="left" />;
     }
-    if (current.speaker.includes('恶霸') || current.speaker.includes('市井') || current.speaker.includes('菜贩') || current.avatarType === 'ruffian') {
+    if (speakerName.includes('恶霸') || speakerName.includes('市井') || speakerName.includes('菜贩') || current.avatarType === 'ruffian') {
       return <RuffianBust isActive={isLeftActive} side="left" />;
     }
-    if (current.speaker.includes('干将') && speakerSide === 'left') {
+    if (speakerName.includes('干将') && speakerSide === 'left') {
       return <GanJiangBust isActive={isLeftActive} side="left" />;
     }
     // Default left is YuLang or Ruffian
@@ -507,10 +518,10 @@ export const WuxiaDialogueBox: React.FC<WuxiaDialogueBoxProps> = ({
 
   // Determine which right avatar to render
   const renderRightBust = () => {
-    if (current.speaker.includes('孔子') || current.avatarType === 'confucius') {
+    if (speakerName.includes('孔子') || current.avatarType === 'confucius') {
       return <ConfuciusBust isActive={isRightActive} side="right" />;
     }
-    if (current.speaker.includes('子路') || current.avatarType === 'zilu') {
+    if (speakerName.includes('子路') || current.avatarType === 'zilu') {
       return <ZiLuBust isActive={isRightActive} side="right" />;
     }
     // Default right is protagonist GanJiang
@@ -593,7 +604,7 @@ export const WuxiaDialogueBox: React.FC<WuxiaDialogueBoxProps> = ({
             <div className="px-6 sm:px-8 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-[#1c2923] via-[#2d4238] to-[#1c2923] border border-[#dfba73] shadow-[0_4px_16px_rgba(0,0,0,0.85)] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#ffd885] shadow-[0_0_6px_#ffd885]" />
               <span className="font-serif font-bold text-sm sm:text-base tracking-[0.2em] text-[#ffd885] drop-shadow-sm">
-                {current.nameTag || current.speaker}
+                {current.nameTag || current.speaker || '侠士'}
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#ffd885] shadow-[0_0_6px_#ffd885]" />
             </div>
@@ -607,20 +618,20 @@ export const WuxiaDialogueBox: React.FC<WuxiaDialogueBoxProps> = ({
           {/* 5. Main Spoken Dialogue Text */}
           <div className="mt-3 sm:mt-2.5 px-1 sm:px-3 text-[#f5efe3] font-serif text-base sm:text-lg md:text-xl leading-relaxed tracking-wide min-h-[50px] flex items-center">
             <p className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              {current.text}
+              {current?.text || ''}
             </p>
           </div>
 
           {/* 6. Bottom Navigation Line: Progress & Click-Advance Prompt */}
           <div className="mt-2.5 flex items-center justify-between border-t border-[#2b3e36]/70 pt-2 px-1 text-xs font-serif">
             <span className="text-[11px] sm:text-xs text-[#7bb39d] tracking-wider">
-              第 {currentIndex + 1} / {dialogues.length} 幕 · 点击任意处继续
+              第 {currentIndex + 1} / {total} 幕 · 点击任意处继续
             </span>
 
             {/* Glowing Advance Prompt (Matching Fig 3) */}
             <div className="flex items-center gap-1.5 text-[#ffd885] font-bold group-hover:translate-x-0.5 transition-transform animate-pulse">
               <span className="text-xs sm:text-sm tracking-wider">
-                {currentIndex < dialogues.length - 1 ? '点击继续' : '仗剑启程'}
+                {currentIndex < total - 1 ? '点击继续' : '仗剑启程'}
               </span>
               <ChevronRight className="w-4 h-4 text-[#ffd885]" />
             </div>

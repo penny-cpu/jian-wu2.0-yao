@@ -1,53 +1,184 @@
 // Placeholder Asset Provider with Real Image & Video Fallbacks
+import level1ForgeBg from './images/level1_bg_forge_1788096421951.jpg';
+
+/* =========================================================================
+ * 首页【五德剑道】背景底图配置位置 (可在下方随时替换新图片文件路径)
+ * ========================================================================= */
+import introBgImg from './images/intro_bg_1788276445051.jpg';
+export const HOME_INTRO_BG_IMAGE = introBgImg;
+
+/* =========================================================================
+ * 📜【故事背景（两页简介）背景底图配置位置】
+ * 如需更换故事背景两页底图，可直接在此处修改引入的图片文件路径或变量：
+ * ========================================================================= */
+import bronzePlaqueScrollBg from './images/bronze_scroll_bg_1788276709995.jpg';
+export const STORY_PROLOGUE_BG_IMAGE = bronzePlaqueScrollBg;
+
+/* =========================================================================
+ * 🗺️【九州五德大地图背景底图配置位置】
+ * 如需更换大地图底图，可直接在此处修改引入的图片文件路径或变量：
+ * ========================================================================= */
+import mapScrollBgImg from './images/map_scroll_bg_hd_1788277069306.jpg';
+export const MAP_SCROLL_BG_IMAGE = mapScrollBgImg;
+
+/* =========================================================================
+ * 🎭【春秋人物志 · 三大主角人物形象背景底图配置】
+ * 如需更换各人物的背景底图，可直接在此处修改引入的图片文件路径：
+ * ========================================================================= */
+import ganjiangBioBgImg from './images/ganjiang_bio_bg_1787798389392.jpg';
+import moyeBioBgImg from './images/moye_bio_bg_1788277575393.jpg';
+import ouyeziBioBgImg from './images/ouyezi_bio_bg_1788277591224.jpg';
+
+/* =========================================================================
+ * 🌾【第一关（仁 · 雪夜炊烟）三大交互页面与通关小结专属背景底图配置位置】
+ * ========================================================================= */
+import level1ForgeBgImg from './images/level1_forge_bg_1788327737418.jpg';
+import level1GrindBgImg from './images/level1_grind_bg_1788327752026.jpg';
+import level1ChopBgImg from './images/level1_chop_bg_1788327763685.jpg';
+import level1EpilogueBgImg from './images/level1_epilogue_bg_1788278832759.jpg';
+
+export const LEVEL1_FORGE_STAGE_BG = level1ForgeBgImg;       // 资产1：试炼一 · 垫石锻剑背景图
+export const LEVEL1_GRIND_STAGE_BG = level1GrindBgImg;       // 资产2：试炼二 · 寒石开刃背景图
+export const LEVEL1_CHOP_STAGE_BG = level1ChopBgImg;         // 资产3：试炼三 · 挥剑劈柴背景图
+export const LEVEL1_EPILOGUE_BG_IMAGE = level1EpilogueBgImg; // 资产4：通关小结底图（60%遮罩）
+
+/* =========================================================================
+ * 🌲【第二关（礼 · 剑问圣人）各交互阶段背景底图配置位置】
+ * ========================================================================= */
+import level2ParryStandoffImg from './images/level2_parry_standoff_1788327775188.jpg';
+import level2DialogueConfuciusImg from './images/level2_dialogue_confucius_1788327793672.jpg';
+import level2ReceiveCeremonyImg from './images/level2_receive_ceremony_1788327806522.jpg';
+
+export const LEVEL2_STAGE_PARRY_BG = level2ParryStandoffImg;       // 资产1：格挡剑与前序/小结底图（子路与干将对峙）
+export const LEVEL2_STAGE_DIALOGUE_BG = level2DialogueConfuciusImg;// 资产2：古柏对谈对话框底图（子路、干将、孔子三人对谈）
+export const LEVEL2_STAGE_RECEIVE_BG = level2ReceiveCeremonyImg;   // 资产3：双手接剑交互底图（子路行递剑礼予干将、孔子在旁欣慰观看）
+export const LEVEL2_CYPRESS_WILDERNESS_BG = level2ParryStandoffImg;// 兼容别名
+export const LEVEL2_EPILOGUE_BG_IMAGE = level2ParryStandoffImg;    // 兼容别名（通关小结处统一只使用第一页背景图）
+
+/* =========================================================================
+ * ⚔️【第三关（义 · 烈风之断）实景背景与通关小结底图配置位置】
+ * 包含关键图片资产位置，可直接在此处修改引入的图片文件路径：
+ * 1. LEVEL3_PRELUDE_AND_EPILOGUE_BG : 开头页与通关小结整页底图（干将在古镇街头持剑救下戴玉佩小姑娘）
+ * 2. LEVEL3_SWORD_GUARD_BG          : 试炼二（玉魂嵌合）中心弹窗底图（参考图2剑柄与凹槽）
+ * 3. LEVEL3_JADE_ORNAMENT_IMAGE     : 试炼二剑形玉珏造型图片（参考图1透雕羊脂白玉质感）
+ * ========================================================================= */
+import level3RescueGirlBgImg from './images/level3_rescue_girl_bg_1788329167324.jpg';
+import level3SwordGuardBgImg from './images/level3_sword_guard_cavity_1788329180078.jpg';
+import level3JadeOrnamentImg from './images/level3_jade_plaque_ornament_1788329193469.jpg';
+
+export const LEVEL3_PRELUDE_AND_EPILOGUE_BG = level3RescueGirlBgImg; // 资产1：第三关开头页与通关小结共用底图
+export const LEVEL3_EPILOGUE_BG_IMAGE = level3RescueGirlBgImg;       // 兼容别名
+export const LEVEL3_STREET_RAIN_BG = level3RescueGirlBgImg;          // 兼容别名
+export const LEVEL3_SWORD_GUARD_BG = level3SwordGuardBgImg;          // 资产2：试炼二剑柄凹槽底图
+export const LEVEL3_JADE_ORNAMENT_IMAGE = level3JadeOrnamentImg;     // 资产3：剑形玉珏造型图
+
+/* =========================================================================
+ * 📜【第四关（智 · 空谷之兽）试炼前情/通关小结与试炼二五大背景底图配置位置】
+ * 包含关键图片资产位置，可直接在此处修改引入的图片文件路径：
+ * 1. LEVEL4_PRELUDE_BG_IMAGE   : 试炼前情背景底图（60%遮罩，参考图：斩兽伏首万民敬仰）
+ * 2. LEVEL4_EPILOGUE_BG_IMAGE  : 通关小结背景底图（60%遮罩，参考图：斩兽伏首万民敬仰）
+ * 3. LEVEL4_STEP1_BG           : 试炼二第1题背景（密林枝叶遮蔽，神兽潜伏）
+ * 4. LEVEL4_STEP2_BG           : 试炼二第2题背景（高岩扑下，巨爪撕风）
+ * 5. LEVEL4_STEP3_BG           : 试炼二第3题背景（铁尾如鞭，狂沙横扫）
+ * 6. LEVEL4_STEP4_BG           : 试炼二第4题背景（血口狂扑，腕花虚实乱闪）
+ * 7. LEVEL4_STEP5_BG           : 试炼二第5题背景（神兽力竭，云剑迂回收势）
+ * ========================================================================= */
+import level4BeastSlainBgImg from './images/level4_beast_slain_bg_1788330470232.jpg';
+import level4Step1BushesBgImg from './images/level4_step1_bushes_bg_1788330486858.jpg';
+import level4Step2PounceBgImg from './images/level4_step2_pounce_bg_1788330504626.jpg';
+import level4Step3SweepBgImg from './images/level4_step3_sweep_1788337591757.jpg';
+import level4Step4JawBgImg from './images/level4_step4_jaw_1788337614257.jpg';
+import level4Step5CloudBgImg from './images/level4_step5_cloud_1788337633315.jpg';
+
+export const LEVEL4_PRELUDE_BG_IMAGE = level4BeastSlainBgImg;   // 资产1：第四关试炼前情背景底图（60%遮罩）
+export const LEVEL4_EPILOGUE_BG_IMAGE = level4BeastSlainBgImg;  // 资产2：第四关通关小结背景底图（60%遮罩）
+export const LEVEL4_STEP1_BG = level4Step1BushesBgImg;          // 资产3：试炼二第1题背景
+export const LEVEL4_STEP2_BG = level4Step2PounceBgImg;          // 资产4：试炼二第2题背景
+export const LEVEL4_STEP3_BG = level4Step3SweepBgImg;           // 资产5：试炼二第3题背景
+export const LEVEL4_STEP4_BG = level4Step4JawBgImg;             // 资产6：试炼二第4题背景
+export const LEVEL4_STEP5_BG = level4Step5CloudBgImg;           // 资产7：试炼二第5题背景
+
+/* =========================================================================
+ * 📜【第五关（信 · 孤山挂剑）试炼前情/通关小结/登临进度/恭获五德之信背景底图配置位置】
+ * 1. LEVEL5_PRELUDE_BG_IMAGE  : 试炼前情背景底图（参考图2：老者授剑与悬剑连环画卷轴，60%遮罩）
+ * 2. LEVEL5_EPILOGUE_BG_IMAGE : 通关小结背景底图（参考图2：老者授剑与悬剑连环画卷轴，60%遮罩）
+ * 3. LEVEL5_PARKOUR_BG_IMAGE  : 登临进度交互页背景底图（参考图3：落日云海古松悬剑与干将背影，55%遮罩）
+ * 4. LEVEL5_REWARD_BG_IMAGE   : 恭获五德之信背景底图（参考图4：恭喜玩家获得五德之信金色绘卷，60%遮罩）
+ * ========================================================================= */
+import level5ScrollComicBgImg from './images/level5_scroll_comic_bg_1788338618849.jpg';
+import level5SunsetSwordBgImg from './images/level5_sunset_sword_bg_1788338631538.jpg';
+import level5RewardTrustBgImg from './images/level5_reward_trust_bg_1788338643011.jpg';
+
+export const LEVEL5_PRELUDE_BG_IMAGE = level5ScrollComicBgImg;  // 资产1：试炼前情底图（60%遮罩）
+export const LEVEL5_EPILOGUE_BG_IMAGE = level5ScrollComicBgImg; // 资产2：通关小结底图（60%遮罩）
+export const LEVEL5_PARKOUR_BG_IMAGE = level5SunsetSwordBgImg;  // 资产3：登临进度交互页底图（55%遮罩）
+export const LEVEL5_REWARD_BG_IMAGE = level5RewardTrustBgImg;   // 资产4：恭获五德之信底图（60%遮罩）
+
+export const CHARACTER_BIO_IMAGES = {
+  ganjiang: ganjiangBioBgImg, // 干将人物形象底图
+  moye: moyeBioBgImg,         // 莫邪人物形象底图
+  ouyezi: ouyeziBioBgImg,     // 欧冶子人物形象底图
+};
 
 export const ASSET_MAP: Record<string, string> = {
   // Title & Prologue
-  intro_bg: 'assets/images/intro_bg.jpg',
-  cover_bg: 'assets/images/intro_bg.jpg',
-  intro_bg2: 'assets/images/intro_bg2.jpg',
-  story_prologue_bg: 'assets/images/intro_bg2.jpg',
-  map_scroll_bg: 'assets/images/map_scroll_bg.jpg',
+  intro_bg: introBgImg,
+  cover_bg: introBgImg,
+  intro_bg2: bronzePlaqueScrollBg,
+  story_prologue_bg: bronzePlaqueScrollBg,
+  map_scroll_bg: mapScrollBgImg,
   manual_bg: 'assets/images/manual_modal_bg.jpg',
   
-  // Character Card Portraits
-  char_ganjiang: 'assets/images/char_ganjiang.jpg',
-  char_moye: 'assets/images/char_moye.jpg',
-  char_ouyezi: 'assets/images/char_ouyezi.jpg',
+  // Character Card & Bio Portraits
+  char_ganjiang: ganjiangBioBgImg,
+  char_moye: moyeBioBgImg,
+  char_ouyezi: ouyeziBioBgImg,
 
   // Level 1: 仁
-  level1_bg_forge: 'assets/images/level1_bg_forge.jpg',
-  level1_bg_grind: 'assets/images/level1_bg_grind.jpg',
-  level1_bg_chop: 'assets/images/level1_bg_chop.jpg',
-  level1_bg_summary: 'assets/images/level1_bg_summary.jpg',
+  level1_bg_forge: level1ForgeBgImg,
+  level1_bg_grind: level1GrindBgImg,
+  level1_bg_chop: level1ChopBgImg,
+  level1_bg_summary: level1EpilogueBgImg,
 
   // Level 2: 礼
-  level2_bg_parry: 'assets/images/level2_bg_parry.jpg',
-  level2_bg_dialogue: 'assets/images/level2_bg_dialogue.jpg',
-  level2_bg_receive: 'assets/images/level2_bg_receive.jpg',
-  level2_bg_salute: 'assets/images/level2_bg_salute.jpg',
-  level2_bg_summary: 'assets/images/level2_bg_summary.jpg',
+  level2_bg_parry: level2ParryStandoffImg,
+  level2_bg_dialogue: level2DialogueConfuciusImg,
+  level2_bg_receive: level2ReceiveCeremonyImg,
+  level2_bg_salute: level2ReceiveCeremonyImg,
+  level2_bg_summary: level2ParryStandoffImg,
 
   // Level 3: 义
-  level3_bg_combat: 'assets/images/level3_bg_combat.jpg',
-  level3_bg_jade: 'assets/images/level3_bg_jade.jpg',
-  level3_bg_release: 'assets/images/level3_bg_release.jpg',
-  level3_bg_summary: 'assets/images/level3_bg_summary.jpg',
+  level3_bg_combat: level3RescueGirlBgImg,
+  level3_bg_jade: level3RescueGirlBgImg,
+  level3_bg_release: level3RescueGirlBgImg,
+  level3_bg_summary: level3RescueGirlBgImg,
+  level3_sword_guard: level3SwordGuardBgImg,
+  level3_jade_plaque: level3JadeOrnamentImg,
   level3_slash: 'assets/images/level3_slash.jpg',
   level3_thrust: 'assets/images/level3_thrust.jpg',
-  level3_jade_icon: 'assets/images/level3_jade_icon.png',
+  level3_jade_icon: level3JadeOrnamentImg,
 
   // Level 4: 智
-  level4_bg_secret: 'assets/images/level4_bg_secret.jpg',
-  level4_bg_step12: 'assets/images/level4_bg_step12.jpg',
-  level4_bg_step34: 'assets/images/level4_bg_step34.jpg',
-  level4_bg_step5: 'assets/images/level4_bg_step5.jpg',
-  level4_bg_summary: 'assets/images/level4_bg_summary.jpg',
+  level4_bg_secret: level4BeastSlainBgImg,
+  level4_bg_step12: level4Step1BushesBgImg,
+  level4_bg_step34: level4Step3SweepBgImg,
+  level4_bg_step5: level4Step5CloudBgImg,
+  level4_bg_step1: level4Step1BushesBgImg,
+  level4_bg_step2: level4Step2PounceBgImg,
+  level4_bg_step3: level4Step3SweepBgImg,
+  level4_bg_step4: level4Step4JawBgImg,
+  level4_bg_summary: level4BeastSlainBgImg,
+  level4_prelude_bg: level4BeastSlainBgImg,
 
   // Level 5: 信
-  level5_bg_run1: 'assets/images/level5_bg_run1.jpg',
-  level5_bg_run2: 'assets/images/level5_bg_run2.jpg',
-  level5_bg_tree: 'assets/images/level5_bg_tree.jpg',
-  level5_bg_summary: 'assets/images/level5_bg_summary.jpg',
+  level5_bg_run1: level5SunsetSwordBgImg,
+  level5_bg_run2: level5SunsetSwordBgImg,
+  level5_bg_parkour: level5SunsetSwordBgImg,
+  level5_bg_tree: level5ScrollComicBgImg,
+  level5_bg_summary: level5ScrollComicBgImg,
+  level5_prelude_bg: level5ScrollComicBgImg,
+  level5_epilogue_bg: level5ScrollComicBgImg,
+  level5_reward_bg: level5RewardTrustBgImg,
 
   // Final Chapter
   final_bg_furnace: 'assets/images/final_bg_furnace.jpg',
@@ -492,11 +623,65 @@ export function getDialogueCourtyardPlaceholder(): string {
 
 // SVG Placeholder generator with traditional Chinese ink & sword mood
 export function getPlaceholderImage(key: string, title: string, subtitle: string = '', accentColor: string = '#D4AF37'): string {
+  if (key === 'intro_bg' || key === 'cover_bg') {
+    return introBgImg;
+  }
+  if (key === 'intro_bg2' || key === 'story_prologue_bg') {
+    return bronzePlaqueScrollBg;
+  }
+  if (key === 'level1_bg_forge') {
+    return level1ForgeBgImg;
+  }
+  if (key === 'level1_bg_grind') {
+    return level1GrindBgImg;
+  }
+  if (key === 'level1_bg_chop') {
+    return level1ChopBgImg;
+  }
+  if (key === 'level1_bg_summary') {
+    return level1EpilogueBgImg;
+  }
   if (key === 'map_scroll_bg') {
-    return getMapScrollPlaceholder();
+    return mapScrollBgImg;
+  }
+  if (key === 'level2_bg_summary') {
+    return level2ParryStandoffImg;
+  }
+  if (key === 'level2_bg_parry') {
+    return level2ParryStandoffImg;
   }
   if (key === 'level2_bg_dialogue') {
-    return getDialogueCourtyardPlaceholder();
+    return level2DialogueConfuciusImg;
+  }
+  if (key === 'level2_bg_receive' || key === 'level2_bg_salute') {
+    return level2ReceiveCeremonyImg;
+  }
+  if (key === 'level3_bg_summary' || key === 'level3_bg_combat' || key === 'level3_bg_jade' || key === 'level3_bg_release') {
+    return level3RescueGirlBgImg;
+  }
+  if (key === 'level3_sword_guard') {
+    return level3SwordGuardBgImg;
+  }
+  if (key === 'level3_jade_icon' || key === 'level3_jade_plaque') {
+    return level3JadeOrnamentImg;
+  }
+  if (key === 'level4_bg_summary' || key === 'level4_prelude_bg' || key === 'level4_bg_secret') {
+    return level4BeastSlainBgImg;
+  }
+  if (key === 'level4_bg_step1' || key === 'level4_bg_step12') {
+    return level4Step1BushesBgImg;
+  }
+  if (key === 'level4_bg_step2') {
+    return level4Step2PounceBgImg;
+  }
+  if (key === 'level4_bg_step3' || key === 'level4_bg_step34') {
+    return level4Step3SweepBgImg;
+  }
+  if (key === 'level4_bg_step4') {
+    return level4Step4JawBgImg;
+  }
+  if (key === 'level4_bg_step5') {
+    return level4Step5CloudBgImg;
   }
   if (key === 'char_ganjiang' || key === 'char_moye' || key === 'char_ouyezi') {
     return getCardCharacterImage(title, subtitle, accentColor);
